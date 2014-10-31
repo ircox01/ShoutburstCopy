@@ -1,0 +1,14 @@
+
+---------------Start Survey----------------------
+Survey started at: 04-09-2014 11:54:54 am
+Web Service URL: /shoutburst/services/?routingplan=CustSatTest&pin=1234&action=new&cli=0015109317709&servicenumber=03303030133
+Routing Plan: CustSatTest
+Action: new
+Agent PIN: 1234
+CLI: 0015109317709
+Service Number: 03303030133
+Confirming Agent PIN into Database...
+Hurray Agent PIN Matched
+Setting up new Survey...
+Generating Survey...
+Send back Caller Id which is : 172

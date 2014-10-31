@@ -1,0 +1,21 @@
+</div>
+<!--/.content area-->
+<div class="footer">
+    <p class="copyRightText">All Rights Reserved - &copy; <a href="http://nextgeni.com/" target="_blank"><?php echo ORGANIZATION;?></a> <?php echo date('Y');?> </p>
+    <!-- <ul class="footer-links">
+        <li><?php echo anchor("/","Home");?></li>
+        <li><?php echo anchor("about/","About");?></li>
+        <li><?php echo anchor("clients/","Clients");?></li>
+    </ul>
+    <ul class="social-links">
+        <li class="facebook"><a href="http://www.facebook.com/nextgeni.innovations" target="_blank">Facebook</a></li>
+        <li class="twitter"><a href="https://twitter.com/farzal/" target="_blank">Twitter</a></li>
+        <li class="in"><a href="http://www.linkedin.com/company/next-generation-innovations-nextgeni" target="_blank">Linkedin</a></li>
+    </ul>
+     -->
+</div>
+</div>
+<!--/.site-holder-->
+
+<!--/.wapper-->
+</body></html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Shoutburst - Line Graph Test</title>
+  
+  <script type='text/javascript' src='//code.jquery.com/jquery-1.9.1.js'></script>
+  
+  
+  
+  
+  <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+  
+  <style type='text/css'>
+    
+  </style>
+  
+
+
+<script type='text/javascript'>//<![CDATA[ 
+
+$(function () {
+        $('#container').highcharts({
+            title: {
+                text: 'Q1 Score Calculation for Nadir',
+                x: -20 //center
+            },
+            xAxis: {
+                categories: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+            },
+            yAxis: {
+                title: {
+                    text: 'Q1 Score'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 3,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valueSuffix: 'points'
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: [{
+                name: 'Nadir',
+                data: [7.0, 3.0, 9.0, 4.0, 4.0, 9.0,10.0],lineWidth: 10
+            }]
+        });
+    });
+    
+
+//]]>  
+
+</script>
+
+
+</head>
+<body>
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+  
+</body>
+
+
+</html>
+
+

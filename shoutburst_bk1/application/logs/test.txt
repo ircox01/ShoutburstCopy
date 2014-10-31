@@ -1,0 +1,20 @@
+
+---------------Question1----------------------
+Web Service URL: /shoutburst/services/?max=10&callid=0&q=1&answer=5&action=question
+Score for Q1: 5
+Maximum score for Q1 is 10
+
+---------------Question1----------------------
+Web Service URL: /shoutburst/services/?max=10&callid=0&q=1&answer=5&action=question
+Score for Q1: 5
+Maximum score for Q1 is 10
+
+---------------Question1----------------------
+Web Service URL: /shoutburst/services/?max=10&callid=0&q=1&answer=5&action=question
+Score for Q1: 5
+Maximum score for Q1 is 10
+
+---------------Question1----------------------
+Web Service URL: /shoutburst/services/?max=10&callid=0&q=1&answer=5&action=question
+Score for Q1: 5
+Maximum score for Q1 is 10

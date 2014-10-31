@@ -1,0 +1,71 @@
+<?php 
+                $chartData = str_replace("'", '"', $chartData);
+
+
+?>
+
+<?php
+$lefetch  = explode("],[",$chartData);
+$cats = array();
+
+foreach ($lefetch as $row) {
+	$row = explode(",",$row);
+	$row[0] = str_replace("]","",str_replace("[","",$row[0]));
+	$row[1] = str_replace("]","",str_replace("[","",$row[1]));
+	$cats[] = $row[0];
+	$ydata[] = $row[1];
+}
+
+$cats = implode(",",$cats);
+$ydata = implode(",",$ydata);
+
+?>
+<div id="container2" style="min-width: 350px; height: 310px; margin: 0 auto"></div>
+<script type='text/javascript'>
+$(function () {
+        $('#container2').highcharts({
+            chart: {
+                type: 'column',
+				options3d: {
+					enabled: true,
+					alpha: 5,
+					beta: 15,
+					depth: 50,
+					viewDistance: 25
+				}
+            },
+            title: {
+                text: '<?php echo $graphTitle?>'
+            },
+
+            xAxis: {
+				title: {
+                    text: '<?php echo $X_Axis?>'
+                },			
+                categories: [<?=$cats?>]
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '<?php echo $Y_Axis?>'
+                }
+            },
+            plotOptions: {
+                column: {
+				depth:25
+                }
+            },
+            series: [{
+                name: 'Score',
+                data: [<?=$ydata?>],
+                color: '#993D3D'
+
+            }]
+        });
+    });
+</script>
+    
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/highcharts-3d.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+

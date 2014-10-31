@@ -1,0 +1,1 @@
+Severity: Notice  --> Undefined variable: access_level /var/www/shoutburst/application/views/templates/header.php 202Severity: Notice  --> Undefined variable: access_level /var/www/shoutburst/application/views/templates/header.php 202

@@ -1,0 +1,57 @@
+Severity: Notice  --> Undefined index: filename /var/www/shoutburst/application/controllers/services.php 109
+---------------Question1----------------------
+Web Service URL: /shoutburst/services/?max=10&callid=172&q=1&answer=5&action=question
+Score for Q1: 5
+Maximum score for Q1 is 10
+Severity: Notice  --> Undefined index: filename /var/www/shoutburst/application/controllers/services.php 109
+---------------Question1----------------------
+Web Service URL: /shoutburst/services/?max=10&callid=0&q=1&answer=2&action=question
+Score for Q1: 2
+Maximum score for Q1 is 10
+Severity: Notice  --> Undefined index: filename /var/www/shoutburst/application/controllers/services.php 109
+---------------Question2----------------------
+Web Service URL: /shoutburst/services/?max=10&callid=0&q=2&answer=2&action=question
+Score for Q2: 2
+Maximum score for Q2 is 10
+Severity: Notice  --> Undefined index: filename /var/www/shoutburst/application/controllers/services.php 109
+---------------Question3----------------------
+Web Service URL: /shoutburst/services/?max=10&callid=0&q=3&answer=4&action=question
+Score for Q3: 4
+Maximum score for Q3 is 10
+Severity: Notice  --> Undefined index: filename /var/www/shoutburst/application/controllers/services.php 154Severity: Notice  --> Undefined variable: filepath /var/www/shoutburst/application/controllers/services.php 192Severity: Notice  --> Undefined variable: filepath /var/www/shoutburst/application/controllers/services.php 251
+---------------Record----------------------
+Web Service URL: /shoutburst/services/?time=09%2F04%2F2014+10%3A55%3A31&tree=RoutingBad&callid=0&r=7&action=record
+Action: record
+Timestamp: 09/04/2014 10:55:31
+Tree: RoutingBad
+Icon ID: 7
+File Name: ICON_CustSatTest_RoutingBad_7_1396513360486.
+---FTP connecting error---
+----Updating database with file name----
+--Database updated successfully--
+Severity: Notice  --> Undefined index: filename /var/www/shoutburst/application/controllers/services.php 109
+---------------Question1----------------------
+Web Service URL: /shoutburst/services/?max=10&callid=173&q=1&answer=2&action=question
+Score for Q1: 2
+Maximum score for Q1 is 10
+Severity: Notice  --> Undefined index: filename /var/www/shoutburst/application/controllers/services.php 109
+---------------Question1----------------------
+Web Service URL: /shoutburst/services/?max=10&callid=174&q=1&answer=2&action=question
+Score for Q1: 2
+Maximum score for Q1 is 10
+Severity: Notice  --> Undefined index: filename /var/www/shoutburst/application/controllers/services.php 109
+---------------Question1----------------------
+Web Service URL: /shoutburst/services/?max=10&callid=176&q=1&answer=2&action=question
+Score for Q1: 2
+Maximum score for Q1 is 10
+Severity: Notice  --> Undefined index: filename /var/www/shoutburst/application/controllers/services.php 109
+---------------Question1----------------------
+Web Service URL: /shoutburst/services/?max=10&callid=176&q=1&answer=2&action=question
+Score for Q1: 2
+Maximum score for Q1 is 10
+Severity: Notice  --> Undefined index: filename /var/www/shoutburst/application/controllers/services.php 109
+---------------Question1----------------------
+Web Service URL: /shoutburst/services/?max=10&callid=176&q=1&answer=2&action=question
+Score for Q1: 2
+Maximum score for Q1 is 10
+Severity: Notice  --> Undefined variable: filepath /var/www/shoutburst/application/controllers/services.php 194Severity: Notice  --> Undefined variable: filepath /var/www/shoutburst/application/controllers/services.php 253Severity: Notice  --> Undefined variable: filepath /var/www/shoutburst/application/controllers/services.php 194Severity: Notice  --> Undefined variable: filepath /var/www/shoutburst/application/controllers/services.php 253404 Page Not Found --> images404 Page Not Found --> images404 Page Not Found --> imagesSeverity: Notice  --> Undefined offset: 3 /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Trying to get property of non-object /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Undefined offset: 3 /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Trying to get property of non-object /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Undefined offset: 3 /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Trying to get property of non-object /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Undefined offset: 3 /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Trying to get property of non-object /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Undefined offset: 3 /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Trying to get property of non-object /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Undefined offset: 3 /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Trying to get property of non-object /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Undefined offset: 3 /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Trying to get property of non-object /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Undefined offset: 3 /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Trying to get property of non-object /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Undefined offset: 3 /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Trying to get property of non-object /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Undefined offset: 3 /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Trying to get property of non-object /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Undefined offset: 3 /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Trying to get property of non-object /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Undefined offset: 3 /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Trying to get property of non-object /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Undefined offset: 3 /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Trying to get property of non-object /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Undefined offset: 3 /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Trying to get property of non-object /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Undefined offset: 3 /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Trying to get property of non-object /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Undefined offset: 3 /var/www/shoutburst/application/views/companies/edit.php 28Severity: Notice  --> Trying to get property of non-object /var/www/shoutburst/application/views/companies/edit.php 28404 Page Not Found --> company_logoQuery error: Unknown column 'spinnerDefault.png' in 'where clause'404 Page Not Found --> images404 Page Not Found --> images404 Page Not Found --> images404 Page Not Found --> images404 Page Not Found --> images404 Page Not Found --> images404 Page Not Found --> images404 Page Not Found --> images404 Page Not Found --> images404 Page Not Found --> imagesSeverity: Notice  --> Array to string conversion /var/www/shoutburst/system/database/drivers/mysql/mysql_driver.php 552Query error: Unknown column 'Array' in 'field list'404 Page Not Found --> images

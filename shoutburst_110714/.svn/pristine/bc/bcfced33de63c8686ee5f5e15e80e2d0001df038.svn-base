@@ -1,0 +1,20 @@
+<div id="container">
+<p><?php echo heading('Admin Login', 4);?></p>
+<p><?php echo $this->session->flashdata('message');?></p>
+
+<?php echo form_open_multipart('login/process', array('name' => 'user_login', 'id' => 'user_login')) ?>
+<table>
+    <tr>
+        <td><?php echo form_label('User Name', 'user_name');?></td>
+        <td><?php echo form_input(array('name' => 'user_name', 'id' => 'user_name'));?></td>
+    </tr>
+    <tr>
+        <td><?php echo form_label('Password', 'password');?></td>
+        <td><?php echo form_password(array('name' => 'password', 'id' => 'password'));?></td>
+    </tr>
+    <tr>
+        <td colspan="2" align="right"><?php echo form_submit('user_login', 'Login');?></td>
+    </tr>
+</table>
+</form>
+</div>

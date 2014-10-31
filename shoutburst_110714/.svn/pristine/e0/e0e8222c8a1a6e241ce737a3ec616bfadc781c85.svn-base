@@ -1,0 +1,124 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+class Manage_Filter extends CI_Controller {
+
+	public function __construct()
+	{
+		parent::__construct();
+		
+		$data['title'] = TITLE.' | Filter';
+		$this->load->vars($data);
+		
+		if( ! isset($this->session->userdata['user_id']) )
+			redirect('login/index');
+	}
+	
+	/*
+	 * @author:	Muhammad Sajid
+	 * @name:	index
+	 */
+	public function index()
+	{
+		# get session variable
+		$this_agent = $this->session->userdata['user_id'];
+		$comp_id = $this->session->userdata['comp_id'];
+		
+		# save posted varaibles in array variable
+		$post = $this->input->post();
+		#var_debug($post);
+		
+		# if user wants to save query filter
+		if (isset($post) && !empty($post))
+		{
+			$where = array();
+			$score = 0;			
+			$score_operator = $post['score_operator'];				
+				
+			if (!empty($post['score'])){
+				$score = $post['score'];
+			}
+				
+			#if ($campaigns > 0)
+			if ( isset($post['campaigns']) && (count($post['campaigns']) > 0) )
+			{
+				$where[] = "s.camp_id IN (".implode(",", $post['campaigns']).")";
+			}
+				
+			if ( isset($post['agents']) && (count($post['agents']) > 0) )
+			{
+				$where[] = "s.user_id IN (".$this_agent.",".implode(",", $post['agents']).")";
+				
+			} else {
+				$where[] = "s.user_id = {$this_agent}";
+			}
+				
+			# which operator user selected
+			switch ($score_operator){
+				case 'G':
+					$operator = '>';					
+				break;
+				
+				case 'L':
+					$operator = '<';
+				break;
+				
+				case 'E':
+					$operator = '=';
+				break;
+				
+				case 'B':
+					$operator = 'BETWEEN';
+				break;
+				
+				default:
+					$operator = '';
+				break;
+			}
+
+			if ( !empty($operator) ){
+				if ($operator == 'BETWEEN'){
+					$start_score = $post['start_score'];
+					$where[] = "s.total_score {$operator} {$start_score} AND {$score}";
+				} else {
+					$where[] = "s.total_score {$operator} {$score}";
+				}
+			}
+			
+			$where = implode(' AND ', $where);				
+				
+			$db_query = "SELECT c.camp_name, u.user_id, u.full_name, s.total_score 
+						 FROM surveys s
+						 JOIN campaigns c ON s.camp_id = c.camp_id
+						 JOIN users u ON s.user_id = u.user_id
+						 WHERE {$where}
+						 ORDER BY c.camp_name";
+			#var_debug($db_query);exit;
+			
+			# Update Dashboard
+			$updateData['db_type'] = 'custom';
+			$updateData['db_query'] = $db_query;
+			$this->db->where('user_id', $this_agent);
+			$this->db->update('dashboards', $updateData);			
+			$this->session->set_flashdata('message', '<div style="color:green">Update Successfully.</div>');
+			redirect('manage_filter');
+		}
+		
+		# Get all Campaigns
+		$this->db->from('campaigns c');
+		$this->db->join('company_campaings cc', 'c.camp_id=cc.camp_id');
+		$this->db->where('comp_id',$comp_id);
+		$data['campaigns'] = $this->db->get()->result();
+		
+		# Get all Agents
+		$this->db->from('users u');
+		$this->db->join('user_companies uc', 'uc.user_id = u.user_id');
+		$this->db->where('uc.comp_id',$comp_id);
+		$this->db->where('uc.acc_id',COMP_AGENT);
+		$this->db->where('u.user_id !=',$this_agent);		
+		$this->db->order_by("u.full_name", "assc");
+		$data['agents'] = $this->db->get()->result();
+		
+		$this->load->template('manage_filter/index', $data);
+	}
+	
+}

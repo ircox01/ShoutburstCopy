@@ -1,0 +1,121 @@
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#data_set").change(function()
+	{
+    	var value = $(this).val();
+    	$("#details_div").html('');
+    	$("#details_div").html('Loading...');    	
+    	
+    	// load all tours w.r.t selected Country
+		$.ajax({
+            type : 'GET',
+			url : "<?php echo base_url().'tags/load_data_set_detail/add/'?>"+value,           
+            /*data: {
+            	data_set : value
+            },*/
+            success:function (data) {
+            	$("#details_div").html('');
+            	$("#details_div").show();
+                if(data == 0){
+                	$("#details_div").html('Nothing found');
+                }else{
+                    $("#details_div").append(data);
+                }
+            }          
+        });
+	});
+})
+
+function check_it(){ 
+	var tag_name = $("#tag_name").val();
+	jQuery('#errMsg').css('display','none');
+
+	var start_score = $("#start_score").val();
+	var score = $("#score").val();
+	var score_operator = $("#details").val();
+	
+	if (tag_name == ''){
+		jQuery('#errMsg').text('Please enter tag name.');
+		jQuery('#errMsg').css('display','block');
+		return false;
+	} else if ( (score_operator == 'B') && (start_score > score)){
+		alert('Start score must be less than end score');
+		return false;
+	}else{
+		return true;
+	}
+}
+</script>
+<script type="text/javascript">
+jQuery(function() {
+	jQuery("#jquery-tagbox-text").tagBox();
+	jQuery("#jquery-tagbox-select").tagBox({ 
+    	enableDropdown: true, 
+        dropdownSource: function() {
+        	return jQuery("#jquery-tagbox-select-options");
+		}
+	});
+});
+</script>
+
+<div id="content">
+  <div class="container">
+    <div class="row content-header">
+      <h1>Administration</h1>
+    </div>
+    <!-- .row -->
+    <div class="row content-body">
+      <div class="col-sm-5"> <?php echo heading('Add Tags Setup', 3);?> <?php echo form_open_multipart('tags/add', array('name'=>'tags', 'id'=>'tags', 'onsubmit'=>"return check_it(this)")) ?>
+        <p><?php echo $this->session->flashdata('message');?></p>
+        <div class="form-group">
+          <input type="text" class="sb-control" value="" name="tag_name" id="tag_name" placeholder="Tag name" />
+          <div id='errMsg' style='display:none;color:red;'></div>
+        </div>
+        <div class="form-group">
+          <select name="data_set" id="data_set" class="sb-control">
+            <option value="0">Select Data Set</option>
+            <option value="teams">Teams</option>
+            <option value="agents">Agents</option>
+            <option value="score_levels">Score Levels</option>
+            <option value="cli">CLI</option>
+            <option value="transcriptions">Transcriptions</option>
+            <option value="sentiment">Sentiment</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <div id="details_div" style="display:none;"></div>
+        </div>
+        <div class="form-group">
+          <div>
+            <select name='campaign_name[]' id='campaign_name' data-placeholder="Please Select Campaigns" multiple class="sb-control chosen-select-no-results" tabindex="11">
+              <?php
+									if(!empty($campaigns)){
+										foreach($campaigns as $campaignsRow){
+								 ?>
+              <option value="<?php echo $campaignsRow->camp_id;?>"><?php echo $campaignsRow->camp_name;?></option>
+              <?php
+										}
+									}
+								  ?>
+            </select>
+            <br/>
+            <span id="addNewCampaignRegionLink"> <a href="javascript:;" onclick="addNewCampaignShowRegion(); return false;">Add New Campaign</a> <span>
+		  </div>
+          <div style="display:none;" id="new-campiagn-region">
+            <input type="text" id="addNewCampaign"  placeholder="Add New Campaign" class="sb-control span3 input-large">
+            <span id='RemoveCampaignRegion'> <a href ='javascript:;' onclick='addNewCampaign(); return false;' >Add</a> &nbsp;|&nbsp; <a href ='javascript:;' onclick='removeNewCampaign(); return false;' >Close</a> </span> </div>
+          <div id='errorRegion' style='display:none; color:red;'></div>
+        </div>
+        <div class="form-group text-right">
+        	<!-- Add New Campaign Hidden Url -->
+			<input type='hidden' id='addCamapaignHiddenUrlForJS' value='<?php echo site_url("campaigns/add/ajaxRequest");?>'>
+          <button type="submit" class="sb-btn sb-btn-green">Save Tags</button>
+        </div>
+        </form>
+      </div>
+    </div>
+    <!-- .row -->
+  </div>
+  <!-- .container -->
+</div>
+<!-- #content -->

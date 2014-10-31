@@ -1,0 +1,1 @@
+Severity: Notice  --> Undefined index: comp_id /var/www/shoutburst/application/controllers/tags.php 19Severity: Notice  --> Undefined index: user_id /var/www/shoutburst/application/controllers/tags.php 20Severity: Notice  --> Undefined index: access /var/www/shoutburst/application/controllers/tags.php 21

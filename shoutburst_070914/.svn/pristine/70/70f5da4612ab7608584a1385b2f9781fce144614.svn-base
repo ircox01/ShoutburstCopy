@@ -1,0 +1,35 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+class Dashboard extends CI_Controller {
+
+	public function __construct()
+	{
+		parent::__construct();
+		
+		$data['title'] = TITLE.' | Dashboard';
+		$this->load->vars($data);
+		
+		if( ! isset($this->session->userdata['user_id']) )
+			redirect('login/index');
+	}
+	
+	/*
+	 * @author:	Muhammad Sajid
+	 * @name:	index
+	 */
+	public function index()
+	{
+		# get session variable
+		$user_id = $this->session->userdata['user_id'];
+		$comp_id = $this->session->userdata['comp_id'];
+		$acc_id = $this->session->userdata['access'];
+		
+		# Get my Dashboard
+		$dashboard = $this->db->get_where('dashboards', array('user_id'=>$user_id, 'comp_id'=>$comp_id, 'acc_id'=>$acc_id))->row_array();
+		$db_query = $dashboard['db_query'];
+		$my_db = $this->db->query($db_query)->result();
+		var_debug($my_db);exit;
+		#$this->load->template('dashboard/index', $data);
+	}
+	
+}

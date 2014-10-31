@@ -1,0 +1,14 @@
+To: alniejacobe@yahoo.com
+Subject: asd
+Date: Fri, 1 Nov 2013 17:19:09 +0100
+Return-Path: <you@example.com>
+From: Your Name <you@example.com>
+Message-ID: <6ca5842181db496ca8e755e198c0885e@localhost.localdomain>
+X-Priority: 3
+X-Mailer: PHPMailer 5.2.7 (https://github.com/PHPMailer/PHPMailer/)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 8bit
+
+asd
+

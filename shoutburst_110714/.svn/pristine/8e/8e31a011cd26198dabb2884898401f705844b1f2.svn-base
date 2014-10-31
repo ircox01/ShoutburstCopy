@@ -1,0 +1,112 @@
+<div id="container"> <?php echo heading('Tags', 3);?>
+	<p><?php echo $this->session->flashdata('message');?></p>
+	<table>
+		<tr>
+        	<td><?php echo anchor("tags/add","Add New Tag")?></td>
+        	<td>&nbsp;|&nbsp;</td>
+        	<td><?php echo anchor("tags/add_group","Add New Group Tags")?></td>
+        </tr>
+	</table>
+    
+    <?php if ( !empty($tags) ){ ?>
+    <div id="dt_example">
+		<div id="container">
+			
+			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            	<?php foreach ($tags as $key){ ?>
+            	 <tr class="odd_gradeX">
+                    <td><?php echo $key->tag_name;?></td>
+                    <td align="center">
+                    	<?php echo anchor("tags/edit/".$key->tag_id,"Edit")?>
+                    	|
+                    	<?php 
+							if($key->status==1){
+								echo anchor("tags/delete/".$key->tag_id."/disable","Disable", array('class' => 'confirm','style'=>'color:red;','id'=>"disable__".$key->tag_id));
+							}else{
+								echo anchor("tags/delete/".$key->tag_id."/enable","Enable", array('class' => 'confirm','style'=>'color:green;','id'=>"enable__".$key->tag_id));
+							}
+						?>
+                    	<?php #echo anchor("tags/delete/".$key->tag_id,"Delete")?>
+                    </td>                    
+                </tr>
+                <?php }?>
+            </tbody>
+            </table>
+            
+		</div>
+	</div>
+	<?php }else{ ?>
+	<code>No tag exists.</code>
+	<?php }?>
+	
+	<script>
+		//confirm box for enable and disable agent
+		jQuery(".confirm").confirm({
+			text: "Are you sure you want to perform this action?",
+			title: "Confirmation required",
+			confirm: function( urlAndid) {
+
+				//split to get url and id
+				var urlAndidArr	=	urlAndid.split('__==__');
+				if(urlAndidArr[0]&&urlAndidArr[1]){
+				
+					url	=	urlAndidArr[0];
+					id	=	urlAndidArr[1];
+					
+					//remove attr and set message wait for ajax request completion
+					jQuery('#'+id).attr('href','');
+					jQuery('#'+id).text('Please Wait...');	
+					//split id to determine which action is perform
+					var idArr	=	id.split('__');
+					
+					var actionPerformed	=	idArr[0];
+					var currentId		=	idArr[1];
+					
+				 jQuery.ajax({
+				  url : url,
+				  type: "GET",
+				  success: function(response) {
+				  
+						
+						
+						if(actionPerformed=='disable'){
+							
+							
+							var action = '<?php echo site_url("tags/delete/");?>'+"/"+currentId+"/enable";
+							
+							jQuery('#'+id).attr('href',action);
+							jQuery('#'+id).text('Enable');
+							jQuery('#'+id).css('color','green');									
+							jQuery('#'+id).attr('id','enable__'+currentId);
+							
+						}else if(actionPerformed=='enable'){
+						
+							var action = '<?php echo site_url("tags/delete/");?>'+"/"+currentId+"/disable";
+							
+							jQuery('#'+id).attr('href',action);
+							jQuery('#'+id).text('Disable');							
+							jQuery('#'+id).css('color','red');		
+							jQuery('#'+id).attr('id','disable__'+currentId);
+						}
+						
+				  }
+				 });
+
+				}
+			},
+			cancel: function(button) {
+				// do something
+			},
+			confirmButton: "Yes",
+			cancelButton: "No",
+			post: true
+		});		
+	</script>
+</div>

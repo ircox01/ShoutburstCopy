@@ -1,0 +1,7 @@
+http://mcpants.github.io/jquery.shapeshift/
+http://papermashup.com/demos/jquery-drag-drop/
+
+
+
+================================
+http://davidwalsh.name/demo/drag-drop-sort-save-jquery.php

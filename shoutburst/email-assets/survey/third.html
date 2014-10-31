@@ -1,0 +1,26 @@
+<div class=container-fluid><div class=row><div class="col-md-8 col-lg-8 col-lg-offset-2 col-md-offset-2"><h1>Scoring between 1 and 10, how would you rate the performance of the UK Government in the last 6 months?</h1><div class=slider-container><div id=slider-connect></div></div><form method=post class=DA_custom_form id=registration-form><div class=btnp><input type=submit class=green id=btn-continue-third value=Continue></div></form></div></div></div><script type=text/javascript>$("#btn-continue-third").click(function(){ 
+        document.showView("fourth.html");
+        event.preventDefault(); 
+    });
+    
+    $("#slider-connect").noUiSlider({
+        start: 0,
+        step: 1,
+        connect: "lower",
+        range: {
+          'min': 0,
+          'max': 10
+        }
+    });
+
+    $("#slider-connect").noUiSlider_pips({
+        mode: 'count',
+        values: 11,
+        stepped: true
+    });
+
+    $("#slider-connect").on({
+        slide: function(){
+            console.log($("#slider-connect").val());
+        }
+    });</script>

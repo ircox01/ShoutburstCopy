@@ -1,0 +1,51 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+/*
+ * @author: Muhammad Sajid
+ * @name: Login
+ */
+class Login extends CI_Controller {
+	
+	public function __construct()
+	{
+		parent::__construct();
+		
+		// user validation
+		if(isset($this->session->userdata['user_id']))
+			redirect('welcome');
+		
+		$data['title'] = TITLE;
+		$data['message'] = '';
+		$this->load->vars($data);
+	}
+
+	/*
+	 * @name:	index
+	 * User Login screen
+	 */
+	public function index()
+	{
+		$data = array();
+		$this->load->template('login/index', $data);		
+	}
+
+	/*
+	 * @name:	process
+	 */
+	public function process()
+	{
+        // Validate the user can login
+        $result = $this->users_model->validate();
+
+        // Now we verify the result
+        if(isset($result) && !empty($result)){
+            // If user did validate,
+            // Send them to members area
+            redirect('welcome');
+        }else{
+        	// If user did not validate, then show them login page again
+        	#$data['message'] = 'Access denied!<br />Invalid Email Id or Password.<br/>';
+        	$this->session->set_flashdata('message', 'Access denied!<br />Invalid Email Id or Password.<br/>');
+        	redirect('login/index');
+        }
+    }
+}
