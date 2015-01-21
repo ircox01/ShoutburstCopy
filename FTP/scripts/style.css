@@ -1,0 +1,180 @@
+body{
+	font: 15px arial;
+	margin: 0; padding: 0;
+	height: 100%;
+	width: 100%;/*1440px;*/
+	background-color: #ffffff;
+	margin: 0 auto;
+}
+
+.clear{
+	clear: both;
+}
+
+.alignleft {
+	float: left;
+}
+
+.alignright {
+	float: right;
+}
+
+.top_links{
+	margin-top:0px;
+	margin-bottom:0px;
+	height: 15px;
+	font-size: 15px;
+}
+
+.top_links li{
+	padding-left:10px;
+	padding-right:10px;
+}
+
+li{
+	display: inline;
+	list-style-type: none;
+}
+
+a{
+	color: white;
+	text-decoration: none;	
+}
+
+a:hover{ color: #3abfe0; }
+
+#participants a{
+	color: black;
+}
+
+#participants a:hover{
+	color: #0a8fb0;
+}
+
+.bluish{
+	color: #0a8fb0;
+}
+
+.bluish_b{
+	color: #0a8fb0;
+	font-size: 22px;
+}
+
+.bold{
+	font-weight:bold;
+}
+
+#all_content{
+	margin: 0 auto;
+}
+
+#header_content{
+	height: 570px;
+	background-image: url('../images/header_img.png');
+	background-repeat:no-repeat;
+ 	background-position: top;
+	margin: 0 auto;
+}
+
+#header_inner{
+	width: 982px;
+	margin: 0 auto;
+}
+
+#header_inner *{
+	margin: 0 auto;
+}
+
+#main_content{
+	width: 982px;
+	margin: 0 auto;
+}
+
+.top_links *{
+	font-weight: bold;	
+}
+
+#logos *{
+	display: inline;
+	margin-top: 10px;
+}
+
+#quote{
+	padding-top: 30px;
+}
+
+#quote *{
+	display: inline;
+	float: left;
+	padding-left: 10px;
+}
+
+#quote_text{
+	width: 760px;
+	font-size: 16px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+#quote_text a{
+	color: black;
+}
+
+#quote_text a:hover{
+	color: #0a8fb0;
+}
+
+#quote_text p{
+	padding-left: 150px;
+	
+}
+
+.quote_signature{
+	font-weight: bold;
+	color: #0a8fb0;
+}
+
+#partners *{
+	font-weight: bold;
+	font-size: 22px;
+	color: #0a8fb0;
+	padding-left: 5px;
+	margin-left: 15px;
+}
+
+img{
+	border: 0;
+}
+
+img.less_opacity {   			
+   opacity: 0.4;
+   filter: alpha(opacity=40);
+   zoom: 1;  /* needed to trigger "hasLayout" in IE if no width or height is set */ 
+}
+
+img.less_opacity:hover {   			
+   opacity: 1.0;
+   filter: alpha(opacity=100);
+   zoom: 1;  /* needed to trigger "hasLayout" in IE if no width or height is set */ 
+}
+
+#participants{
+	width: 982px;
+	background-image: url('../images/links_bg.png');
+	background-size: 100% 100%;
+	font-weight: bold;
+	float:left;
+	margin-bottom: 50px;
+}
+
+
+#participants *{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+
+#participants li{
+	display: block;
+	font-size: 15px;	
+}

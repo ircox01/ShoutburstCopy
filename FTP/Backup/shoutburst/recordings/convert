@@ -1,0 +1,8 @@
+#!/bin/bash
+FILES=./*wav
+for f in $FILES
+do
+OUTPUTFILE=`basename $f .wav`
+ffmpeg -loglevel panic -i $f -ar 44100 $OUTPUTFILE.mp3
+rm -f $f
+done

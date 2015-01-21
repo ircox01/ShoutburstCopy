@@ -1,0 +1,85 @@
+/****** CreativSocial **/
+
+.creativsocial {
+	display: table;
+	margin-bottom: 10px;
+}
+
+
+.creativsocial ul {
+	text-align: center;
+	margin: 0;
+	padding: 0;
+	height: 35px;
+	width: 100%;
+}
+
+.creativsocial ul:hover li {
+	opacity: 0.2;
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+	filter: alpha(opacity=20);
+}
+
+.creativsocial ul li {
+	display: inline;
+	float: left;
+	opacity: 0.5;
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+	filter: alpha(opacity=50);
+	background-repeat: no-repeat;
+	background-size: 30px 30px;
+	padding: 0px;
+	background-color: transparent !important;
+	margin: 0px 5px 5px 5px;
+	-webkit-transition:all 0.5s ease-in;  
+    -moz-transition:all 0.5s ease-in;  
+    -o-transition:all 0.5s ease-in;  
+    transition:all 0.5s ease-in;
+}
+
+.creativsocial ul li:hover {
+	opacity: 1;
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+	filter: alpha(opacity=100);
+	background-color: transparent !important;
+}
+
+.creativsocial ul li a {
+	text-align: center;
+	display: block;
+	width: 30px;
+	height: 30px;
+	position: relative;
+}
+
+.creativsocial ul li.tumblr { background-image: url("../../assets/images/icons/square/white/tumblr.svg") }
+.creativsocial ul li.vimeo { background-image: url("../../assets/images/icons/square/white/vimeo.svg") }
+.creativsocial ul li.facebook { background-image: url("../../assets/images/icons/square/white/facebook.svg") }
+.creativsocial ul li.flickr { background-image: url("../../assets/images/icons/square/white/flickr.svg") }
+.creativsocial ul li.pinterest { background-image: url("../../assets/images/icons/square/white/pinterest.svg") }
+.creativsocial ul li.youtube { background-image: url("../../assets/images/icons/square/white/youtube.svg") }
+.creativsocial ul li.twitter { background-image: url("../../assets/images/icons/square/white/twitter.svg") }
+.creativsocial ul li.github { background-image: url("../../assets/images/icons/square/white/github.svg") }
+.creativsocial ul li.dribbble { background-image: url("../../assets/images/icons/square/white/dribbble.svg") }
+.creativsocial ul li.gplus { background-image: url("../../assets/images/icons/square/white/gplus.svg") }
+.creativsocial ul li.linkedin { background-image: url("../../assets/images/icons/square/white/linkedin.svg") }
+.creativsocial ul li.wordpress { background-image: url("../../assets/images/icons/square/white/wordpress.svg") }
+.creativsocial ul li.instagram { background-image: url("../../assets/images/icons/square/white/instagram.svg") }
+.creativsocial ul li.rss { background-image: url("../../assets/images/icons/square/white/rss.svg") }
+
+/*IE 8 Icons */
+
+.ie8 .creativsocial ul li.tumblr { background-image: url("../../assets/images/icons/square/white/tumblr.png") }
+.ie8 .creativsocial ul li.vimeo { background-image: url("../../assets/images/icons/square/white/vimeo.png") }
+.ie8 .creativsocial ul li.facebook { background-image: url("../../assets/images/icons/square/white/facebook.png") }
+.ie8 .creativsocial ul li.flickr { background-image: url("../../assets/images/icons/square/white/flickr.png") }
+.ie8 .creativsocial ul li.pinterest { background-image: url("../../assets/images/icons/square/white/pinterest.png") }
+.ie8 .creativsocial ul li.youtube { background-image: url("../../assets/images/icons/square/white/youtube.png") }
+.ie8 .creativsocial ul li.twitter { background-image: url("../../assets/images/icons/square/white/twitter.png") }
+.ie8 .creativsocial ul li.github { background-image: url("../../assets/images/icons/square/white/github.png") }
+.ie8 .creativsocial ul li.dribbble { background-image: url("../../assets/images/icons/square/white/dribbble.png") }
+.ie8 .creativsocial ul li.gplus { background-image: url("../../assets/images/icons/square/white/gplus.png") }
+.ie8 .creativsocial ul li.linkedin { background-image: url("../../assets/images/icons/square/white/linkedin.png") }
+.ie8 .creativsocial ul li.wordpress { background-image: url("../../assets/images/icons/square/white/wordpress.png") }
+.ie8 .creativsocial ul li.instagram { background-image: url("../../assets/images/icons/square/white/instagram.png") }
+.ie8 .creativsocial ul li.rss { background-image: url("../../assets/images/icons/square/white/rss.png") }

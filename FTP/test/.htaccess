@@ -1,0 +1,8 @@
+php_value display_errors On
+php_value include_path .:/home/contactability/includes
+php_value auto_prepend_file /home/contactability/cb_start.inc
+php_value auto_append_file  /home/contactability/cb_end.inc
+AddType application/x-httpd-php .html
+AddType application/x-httpd-php .htm
+AddType application/x-httpd-php .php
+DirectoryIndex index.html index.php index.htm
