@@ -187,7 +187,7 @@
                                                                         <li class="general">CLI</li>                            
                                                                 </ul>
                                                                 <span>Numerical</span>
-                                                                <ul id="sort1" class="dragdrop ddsmall">
+                                                                <ul id="sort1" class="dragdrop ddsmall" style="height: 200px">
                                                                         <li class="score">Q1 Score</li>
                                                                         <li class="score">Q2 Score</li>
                                                                         <li class="score">Q3 Score</li>
@@ -196,6 +196,8 @@
                                                                         <li class="score">Total Score</li>
                                                                         <li class="score">Total Surveys</li>
                                                                         <li class="score">NPS</li>
+                                                                        <li class="score">Maximum Scores</li>
+                                                                        <li class="score">Incompletes</li>
                                                                 <!---        <li class="score">Adjusted NPS</li> -->
                                                                 </ul>
                                                                 <span>Detail</span>
