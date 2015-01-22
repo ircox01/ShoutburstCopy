@@ -203,6 +203,9 @@ class Reports extends CI_Controller {
 					$cols[$k]= "total_score as total_score";
 					
 				}
+				if ($k == 'maximum_scores') {
+					$cols[$k] = '(max_q1 + max_q2 + max_q3 + max_q4 + max_q5) as maximum_scores';
+				}
 				if ($cols[$k] != "") {
 					$fields[] = $cols[$k];
 				}
@@ -1441,6 +1444,7 @@ public function wcDraw($query) {
 					's.q5'				=>'Q5 Score',
 					's.total_score'		=>'Total Score',
 					's.average_score'	=>'Average Score',
+					's.maximum_scores'  =>'Maximum Scores'
 					);
 					
 		return $cols;

@@ -639,7 +639,7 @@ function save_fields()
 	 });
 
          var ref_fields = ['Agent PIN','Agent Name','Dialed Number','CLI','Campaign'];
-         var score_fields = ['Q1 Score','Q2 Score','Q3 Score','Q4 Score','Q5 Score','Total Score','Total Surveys'];
+         var score_fields = ['Q1 Score','Q2 Score','Q3 Score','Q4 Score','Q5 Score','Total Score','Total Surveys', 'Maximum Scores', 'Incompletes'];
          var detail_fields = ['Recording','Transcription','Sentiment','Notes','Tag'];
 
 	var has_ref = false;
