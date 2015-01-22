@@ -1,12 +1,13 @@
 <?php echo form_open_multipart('reports/', array('name'=>'add_report', 'id'=>'add_report', 'onsubmit'=>"return check_it(this)")) ?>
 <?php echo $this->session->flashdata('message');?>
+
 <div id="content">
 <div class="container">
 <div id="report_content" class="cf"><!--<input type="button" onclick="gen_pdf()" value="PDF" />-->
     <!-- Step 1 -->
     <div id="step_1">
         <div class="row content-header">        
-	        <a class="sb-btn sb-btn-white" onclick="report_list(); clearContent(); liveChartIntervalRemove(); return false;" href="javascript:;">Cancel</a>
+	        <a class="sb-btn btn-primary-red" onclick="report_list(); clearContent(); liveChartIntervalRemove(); return false;" href="javascript:;">Cancel</a>
 			<?php echo heading('Report Creation', 1);?>
         </div><!-- .row -->
         <div class="row content-body">
@@ -86,10 +87,9 @@
                         <label class="col-sm-6 control-label" for="op_req">Output Requirements:</label>
                         <div class="col-sm-6">
                             <select name="op_req" class="sb-control" id="op_req">    
-                             <option value="">Select</option>                           
+								<option value="data">On Screen</option>
                                 <option value="email">Email</option>
-                                  <option value="data">On Screen</option>
-                                    <option value="ftp">FTP</option>
+                                <option value="ftp">FTP</option>
                             </select>
                         </div>
                     </div>
@@ -129,10 +129,12 @@
                     <!-- #ftp_tr -->
                     <div class="form-group" id="assigned">
                         <label class="col-sm-6 control-label" for="">Assigned?</label>
-                        <div class="col-sm-6">
+                        <div class="col-sm-6" id="dashbord_hide">
                             <input type="checkbox" id="dashboard" name="dashboard">
                             <label for="dashboard"><span></span>Dashboard</label>
-                            <br>
+                        	<br>
+                        </div>
+                        <div class="col-sm-6">
                             <input type="checkbox" id="wallboard" name="wallboard">
                             <label for="wallboard"><span></span>Wallboard</label>
                         </div>
@@ -151,7 +153,7 @@
                         <label class="col-xs-6 control-label" for=""></label>
                         <div class="col-xs-6">
                             <input type="hidden" name="op_req_flag" id="op_req_flag" value="data" />
-                            <input type="button" class="sb-btn sb-btn-green" value="Next" name="btn_step_2" id="btn_step_2" onclick="next_step(2,1); setXAxisLabel(); " />
+                            <input type="button" class="btn btn-primary-green" value="Next" name="btn_step_2" id="btn_step_2" onclick="next_step(2,1); setXAxisLabel(); " />
                         </div>
                     </div>
                 </div>
@@ -169,9 +171,6 @@
         	<?php echo heading('Data Control', 1);?>
         </div>
         <!-- .row -->
-
-
-
         <div class="row content-body">
             <div class="col-sm-12">
                 <div class="row dragdrop-wrap data-control">
@@ -188,7 +187,7 @@
                                                                         <li class="general">CLI</li>                            
                                                                 </ul>
                                                                 <span>Numerical</span>
-                                                                <ul id="sort1" class="dragdrop ddsmall" style = "height: 185px">
+                                                                <ul id="sort1" class="dragdrop ddsmall" style="height: 200px">
                                                                         <li class="score">Q1 Score</li>
                                                                         <li class="score">Q2 Score</li>
                                                                         <li class="score">Q3 Score</li>
@@ -197,9 +196,9 @@
                                                                         <li class="score">Total Score</li>
                                                                         <li class="score">Total Surveys</li>
                                                                         <li class="score">NPS</li>
-                                                                        <li class="score">Adjusted NPS</li>
                                                                         <li class="score">Maximum Scores</li>
                                                                         <li class="score">Incompletes</li>
+                                                                <!---        <li class="score">Adjusted NPS</li> -->
                                                                 </ul>
                                                                 <span>Detail</span>
                                                                 <ul id="sort1" class="dragdrop ddsmall">
@@ -237,10 +236,10 @@
                         <div class="form-horizontal sb-form">
                             <div class="form-group">
                                 <div class="col-xs-6">
-                                    <input type="button" class="sb-btn sb-btn-white" value="Back" name="btn_step_1" id="btn_step_1" onclick="next_step(1,2);" />
+                                    <input type="button" class="btn btn-primary" value="Back" name="btn_step_1" id="btn_step_1" onclick="next_step(1,2);" />
                                 </div>
                                 <div class="col-xs-6">
-                                    <input type="button" class="sb-btn sb-btn-green" value="Next" name="btn_step_3" id="btn_step_3" onclick="save_fields();" />
+                                    <input type="button" class="btn btn-primary-green" value="Next" name="btn_step_3" id="btn_step_3" onclick="save_fields();" />
                                 </div>
                             </div>
                         </div>
@@ -326,10 +325,10 @@
                             <div class="form-group">
                                 <div class="col-xs-6">
                                     <input type="hidden" id="reports_fields" name="reports_fields">
-                                    <input type="button" class="sb-btn sb-btn-white" value="Back" name="btn_step_2" id="btn_step_2" onclick="next_step(2,3);">
+                                    <input type="button" class="btn btn-primary" value="Back" name="btn_step_2" id="btn_step_2" onclick="next_step(2,3);">
                                 </div>
                                 <div class="col-xs-6">
-                                    <input type="button" class="sb-btn sb-btn-green" value="Next" name="btn_step_4" id="btn_step_4" onclick="next_step(4);">
+                                    <input type="button" class="btn btn-primary-green" value="Next" name="btn_step_4" id="btn_step_4" onclick="next_step(4);">
                                 </div>
                             </div>
                         </div>
@@ -427,10 +426,10 @@
                 <div class="form-horizontal sb-form">
                     <div class="form-group">
                         <div class="col-xs-6">
-                            <input type="button" class="sb-btn sb-btn-white" value="Back" name="btn_step_3" id="btn_step_3" onclick="next_step(3,4);">
+                            <input type="button" class="btn btn-primary" value="Back" name="btn_step_3" id="btn_step_3" onclick="next_step(3,4);">
                         </div>
                         <div class="col-xs-6">
-                            <input type="button" class="sb-btn sb-btn-green query_builder" value="Next" name="btn_step_5" id="btn_step_5" onclick="next_step(5,4); ">
+                            <input type="button" class="btn btn-primary-green query_builder" value="Next" name="btn_step_5" id="btn_step_5" onclick="next_step(5,4); ">
                         </div>
                     </div>
                 </div>
@@ -463,7 +462,7 @@
                         </div>
                         <div class="col-xs-6">
 
-                           <input type="button" class="sb-btn sb-btn-green reportSave" value="Save" name="btn_step_save" id="btn_step_save" style='float:right;' onclick="next_step('save',5); ">                            
+                           <input type="button" class="btn btn-primary-green reportSave" value="Save" name="btn_step_save" id="btn_step_save" style='float:right;' onclick="next_step('save',5); ">                            
 
                         </div>
                     </div>
@@ -479,14 +478,14 @@
 </div>
 <!-- #report_content -->
 </form>
-<link rel="stylesheet" href="<?php echo base_url()?>css/spectrum.css" />
-<script src="<?php echo base_url()?>js/jquery-ui.min.js" type="text/javascript"></script>
-<script src="<?php echo base_url()?>js/spectrum.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/spectrum.css" />
+<script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/js/spectrum.js"></script>
 
 <!-- JS Chart file need to be here because when ajax request send it will loaded again for each -->
-<script type="text/javascript" src="<?php echo base_url()?>js/jscharts.js"></script>
+<script type="text/javascript" src="/js/jscharts.js"></script>
 <!-- for sumo select -->
-<script type="text/javascript" src="<?php echo base_url()?>js/jquery.sumoselect.min.js"></script>
+<script type="text/javascript" src="/js/jquery.sumoselect.min.js"></script>
 <!--<link rel="stylesheet" href="<?php echo base_url()?>css/sumoselect.css" />-->
 
     <script type="text/javascript">
@@ -520,11 +519,11 @@ function report_list(){
 //Custom Color Picker - http://bgrins.github.io/spectrum/
 $(document).ready(function(){
 	
-	$('[name="start_date"]').datetimepicker( {format:'d/m/Y H:i'});
-	$('[name="end_date"]').datetimepicker({ format:'d/m/Y H:i'});
+	$('[name="start_date"]').datetimepicker( {format:'Y-m-d H:i'});
+	$('[name="end_date"]').datetimepicker({ format:'Y-m-d H:i'});
 	$('[name="custom_date"]').datetimepicker({ 
 			timepicker:false,
-			format:'d/m/Y'
+			format:'Y-m-d'
 	});
 	$("input.custom-color-picker").spectrum({});
 });
@@ -933,7 +932,9 @@ function setXAxisLabel(){
 
 $(document).ready(function()
 {	
-	$("#op_req option[value='data']").hide();
+	
+	$("#op_req option[value='data']").show();
+	$("#op_req option[value='email']").hide();
 	$("#op_req option[value='ftp']").hide();
 	$('#pie_chart_base').hide();
 	$("#filter").change(function()
@@ -952,11 +953,13 @@ $(document).ready(function()
 		$("#op_req option[value='']").attr('selected', 'selected');
 		$('#email_tr').hide();
 		
-		if ( ((value == "bar chart") || (value == "line graph") || (value == "word cloud")) && (value != "pie chart") )
+		if ( ((value == "bar chart") || (value == "line graph") || (value == "word cloud")) )
 		{
 			$('#assigned').show();		
-			$("#op_req option[value='data']").hide();
+			$('#dashbord_hide').show();
+			$("#op_req option[value='data']").show();
 			$("#op_req option[value='ftp']").hide();
+			$("#op_req option[value='email']").show();
 			$('#reportPeriodRegion').show();
 			$('#reportInetrvalRegion').show();		
 			$('#ftp_tr').hide();
@@ -965,18 +968,36 @@ $(document).ready(function()
 		else if (value == "detail")
 		{
 			$('#assigned').show();		
+			$('#dashbord_hide').show();
 			$('.customDateRegion').hide();
 			$('#reportPeriodRegion').show();
 			$('#reportInetrvalRegion').hide();
 			$("#op_req option[value='ftp']").show();
+			$("#op_req option[value='data']").show();
+			$("#op_req option[value='email']").show();
 			$('#dashboard').prop('checked', false); 
 			$('#wallboard').prop('checked', false); 
 			$('#pie_chart_base').hide();
 		}
+		else if (value == "data")
+		{
+			$('#assigned').show();
+			$('#dashbord_hide').hide();
+			$('.customDateRegion').hide();
+			$('#reportPeriodRegion').show();
+			$('#reportInetrvalRegion').hide();
+			$("#op_req option[value='ftp']").show();
+			$("#op_req option[value='data']").show();
+			$("#op_req option[value='email']").show();
+			$('#wallboard').prop('checked', false);
+			
+		}
 		else if(value == "pie chart")
 		{
-			$('#assigned').show();		
-			$("#op_req option[value='data']").hide();
+			$('#assigned').show();
+			$('#dashbord_hide').show();		
+			$("#op_req option[value='data']").show();
+			$("#op_req option[value='email']").show();
 			$("#op_req option[value='ftp']").hide();
 			$('#reportPeriodRegion').show();				
 			$('#ftp_tr').hide();
@@ -988,11 +1009,11 @@ $(document).ready(function()
 			$('#assigned').hide();		
 			$("#op_req option[value='data']").show();
 			$("#op_req option[value='ftp']").show();
+			$("#op_req option[value='email']").show();
 			$('#reportPeriodRegion').show();
 			$('#reportInetrvalRegion').show();
 			$('#dashboard').prop('checked', false); 
 			$('#wallboard').prop('checked', false); 
-			$('#pie_chart_base').hide();
 		}
 
 		if ( (value == "bar chart") || (value == "line graph") )

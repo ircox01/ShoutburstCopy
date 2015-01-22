@@ -1,0 +1,22 @@
+- All graphs except previews use HighCharts, previews use JSChart.
+- Wallboards_% need to be made into 1 file
+- Pages need to only load JS files they need, not all through header
+	- Currently same script loaded several times
+- Bootstrap framework needs to be updated.
+- Use same date definition all over
+- Remove unused files in the tree-folder-structure.
+- Highland charts needs definition of colors
+- Crontab jobs need to be backuped and maintained
+- Need to make one folder for CSS, one folder for JS and one for Images
+- All references to local resources needs to be done by relative paths, not PHP or dynamic ../../
+- The Igniter framwork needs to be updated: http://codeigniter.com
+- Use one graph type for Wordclouds, Newsticker
+- Temporary storage for designers etc, needs to be in dedicated folders not all over the place.
+- MySQL workbench needs to be able to connect to the server, to lighten the database maintenance.
+- Log rotation of logs written for shoutburst needs to be set up.
+- Daily backups of system needs to be done. (especially DB)
+- SVN needs to be moved to a proper provider and stored with versioning.
+- Proper user/group rights on folders inside shoutburst needs to be set.
+- Valid column needs to be added to database, to be able to globally have one column to see what is activ and not.
+- Images, CSS and JS need to be shrinked and optimized
+
