@@ -198,7 +198,7 @@ HTML;
 						if(isset($selectedColoumnHeadingArr[$attrKey]) && in_array($selectedColoumnHeadingArr[$attrKey],$filterForSubtotalDataControl) && $selectedColoumnHeading =='a'){
 							$overAllTotalVal	=	'0';
 						}else{
-							if (0 === strpos($overAllTotalRow[$attrKey], '00')) {
+							if (isset($overAllTotalRow[$attrKey]) && 0 === strpos($overAllTotalRow[$attrKey], '00')) {
 								$overAllTotalVal	=	'0';
 							} else {
 								$overAllTotalVal	=	array_sum($overAllTotalRow);

@@ -181,6 +181,16 @@ class Reports extends CI_Controller {
 					$totalSurvey	=	true;
 					continue;
 				}
+				if ($k == 'maximum_scores') {
+					$maximumScores = true;
+					$cols[$k] = '{{maximum_scores}} as maximum_scores';
+
+				}
+				if ($k == 'incompletes') {
+					$incompletes = true;
+					$cols[$k] = '{{incompletes}} as incompletes';
+
+				}
 				if($k == "tag")
 				{
 					//if ($report_type != 'detail') {"
@@ -202,9 +212,6 @@ class Reports extends CI_Controller {
 					// Messed up grouping if using AVG (
 					$cols[$k]= "total_score as total_score";
 					
-				}
-				if ($k == 'maximum_scores') {
-					$cols[$k] = '(max_q1 + max_q2 + max_q3 + max_q4 + max_q5) as maximum_scores';
 				}
 				if ($cols[$k] != "") {
 					$fields[] = $cols[$k];
@@ -376,7 +383,14 @@ class Reports extends CI_Controller {
             }
 
 		}
+
 		$query = 'SELECT '. $select .' '. $from .' '. $join .' '. $where;
+
+		if (@$maximumScores or @$incompletes) {
+			$query = str_replace('{{maximum_scores}}',"(select count(*) from surveys s $join $where and (s.max_q1 + s.max_q2 + s.max_q3 + s.max_q4 + s.max_q5 = s.total_score))", $query);
+			$query = $query." LIMIT 1";
+		}
+
 	  	//die(var_debug($query));
 	    /*$query = "SELECT camp_name,q1,SUM(s.q1) AS totalSurveyScore,DATE_FORMAT(FROM_UNIXTIME(UNIX_TIMESTAMP(date_time) - MOD(UNIX_TIMESTAMP(date_time), 300)), '%Y-%m-%d %H:%i') AS reportDate,GROUP_CONCAT(CONCAT(s.q1,'---+++--', Date_format(DATE_SUB(date_time, INTERVAL 5 MINUTE),'%Y-%m-%d %H:%i')) SEPARATOR '___---___') AS totalWithRange,CONCAT('Record Shown for ', MONTHNAME(DATE_SUB(NOW(), INTERVAL 1 MONTH)),',',YEAR(s.date_time)) AS recordShownMessage,GROUP_CONCAT(DISTINCT(camp_name)) AS AgentFullName,full_name,s.q1 , cc.logo AS logo  FROM surveys s LEFT JOIN users u ON u.user_id = s.user_id
 				 LEFT JOIN user_companies uc ON uc.user_id = u.user_id
@@ -489,10 +503,12 @@ class Reports extends CI_Controller {
 			
 			$report_name	 =	$post['report_name'];
 			$report_period	 =  $post['report_period'];
+			$start_date      =  $post['start_date'];
+			$end_date        =  $post['end_date'];
 
 			//draw data - NX: removed tag_name from SELECT
 						
-			$query = 'SELECT '. $select .' '. $from .' '. $join .' '. $where;
+			//$query = 'SELECT '. $select .' '. $from .' '. $join .' '. $where;
 	 		$selectedColoumnHeading = "Date / Time,".$selectedColoumnHeading;
 			detailReportDraw( $query, $report_type , $background_color , $report_period, $start_date, $end_date, $report_name , $selectedColoumnHeading );
 		}
