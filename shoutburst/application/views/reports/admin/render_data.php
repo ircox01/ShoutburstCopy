@@ -349,6 +349,7 @@ if (isset($errMessage) && $errMessage != '') {
                     </td>
                     <?php
                     foreach ($selectedColoumnHeadingArr as $selectedColoumnHeadingRow) {
+
                         $hclass = '-';
                         if ($selectedColoumnHeadingRow == "Q1 Score") {
                             $hclass = number_format($q1_total, 1);

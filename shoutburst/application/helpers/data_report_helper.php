@@ -190,11 +190,6 @@
 							$selectedConcat[]	=	$commaVal."IFNULL($temporary_variable[1], 'Not Found')";
 
 					}
-					if ( $selectRow == '(max_q1 + max_q2 + max_q3 + max_q4 + max_q5) as maximum_scores') {
-						$temporary_variable= explode("as ", $selectRow);
-						$commaVal	=	",";
-						$selectedConcat[]	=	$commaVal."IFNULL($temporary_variable[0], 'Not Found')";
-					}
 					else if( $selectRow != "GROUP_CONCAT(DISTINCT tag_name) AS tag_name"  ){
 						$commaVal	=	",";
 //					}
