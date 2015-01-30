@@ -13,6 +13,7 @@ class Transcriptions_model extends CI_Model {
 	 */
 	public function get_transcription($transcription_id, $comp_id, $transcriber)
 	{
+
 		$query = array();
 		if ( $transcriber == 1){
 			$sql = "SELECT s.recording, s.date_time, t.* 
@@ -53,7 +54,10 @@ class Transcriptions_model extends CI_Model {
 			$sql = "SELECT s.*, s.date_time,t.transcription_id, t.transcriptions_text, t.sentiment_score, t.gender 
 					FROM surveys s
 					LEFT JOIN transcriptions t ON s.sur_id = t.sur_id
-					WHERE s.comp_id = $comp_id AND s.processed = 1 AND downloaded=1 AND (LENGTH(transcriptions_text) < 5 OR transcriptions_text IS NULL)";
+					WHERE s.comp_id = $comp_id
+					AND s.processed = 1
+				--	AND downloaded=1
+					AND (LENGTH(transcriptions_text) < 5 OR transcriptions_text IS NULL)";
 			$query = $this->db->query($sql)->result();			
 		}		
 		return $query;
