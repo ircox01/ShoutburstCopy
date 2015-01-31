@@ -48,7 +48,17 @@ class Users_model extends CI_Model {
                     'validated' => true,
             		'user_data' => true
                     );
+			/**
+			 * there is specific column
+			 * in user_companies table
+			 * but we want to grant all
+			 * admins and managers right
+			 * to see transcriber page
+			 */
+			$data['transcriber'] = $row->acc_id < 4 ? 1 : 0;
+
             $this->session->set_userdata($data);
+
             return true;
         }
         // If the previous process did not validate
