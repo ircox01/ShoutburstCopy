@@ -388,6 +388,7 @@
 					
 					if($requestedFromList=='Request From List'){
 						$data['report_id']	=	$reportId;
+						$data['hancymode'] = ($ci->uri->segments[1] == 'wallboard' && $ci->uri->segments[2] == 'launch');
 						$ci->load->view('reports/render_data_view', $data);
 					}else{
 						$ci->load->view('reports/admin/render_data', $data);
