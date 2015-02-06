@@ -62,7 +62,7 @@ $commonButtons = '';//commonButtons();
         -webkit-border-top-left-radius:20px;
         border-top-left-radius:20px;
     }
-    .hancytable table{
+    .hancytable table {
          border-collapse: collapse;
          border-spacing: 0;
          width:100%;
@@ -85,15 +85,15 @@ $commonButtons = '';//commonButtons();
         -webkit-border-top-right-radius:20px;
         border-top-right-radius:20px;
     }
-    .hancytable tr:last-child td:first-child{
+    .hancytable tr:last-child td:first-child {
          -moz-border-radius-bottomleft:20px;
          -webkit-border-bottom-left-radius:20px;
          border-bottom-left-radius:20px;
     }
-    .hancytable tr:hover td{
+    .hancytable tr:hover td {
           background-color:#ffffff;
     }
-    .hancytable td{
+    .hancytable td {
         vertical-align:middle;
 
         background-color:#aad4ff;
@@ -107,16 +107,16 @@ $commonButtons = '';//commonButtons();
         font-weight:normal;
         color:#000000;
     }
-    .hancytable tr:last-child td{
+    .hancytable tr:last-child td {
          border-width:0px 1px 0px 0px;
     }
-    .hancytable tr td:last-child{
+    .hancytable tr td:last-child {
           border-width:0px 0px 1px 0px;
     }
-    .hancytable tr:last-child td:last-child{
+    .hancytable tr:last-child td:last-child {
            border-width:0px 0px 0px 0px;
     }
-    .hancytable tr:first-child th{
+    .hancytable tr:first-child th {
         background:-o-linear-gradient(bottom, #005fbf 5%, #003f7f 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #005fbf), color-stop(1, #003f7f) );
         background:-moz-linear-gradient( center top, #005fbf 5%, #003f7f 100% );
         filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#005fbf", endColorstr="#003f7f");	background: -o-linear-gradient(top,#005fbf,003f7f);
@@ -130,17 +130,17 @@ $commonButtons = '';//commonButtons();
         font-weight:bold;
         color:#ffffff;
     }
-    .hancytable tr:first-child:hover th{
+    .hancytable tr:first-child:hover th {
         background:-o-linear-gradient(bottom, #005fbf 5%, #003f7f 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #005fbf), color-stop(1, #003f7f) );
         background:-moz-linear-gradient( center top, #005fbf 5%, #003f7f 100% );
         filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#005fbf", endColorstr="#003f7f");	background: -o-linear-gradient(top,#005fbf,003f7f);
 
         background-color:#005fbf;
     }
-    .hancytable tr:first-child th:first-child{
+    .hancytable tr:first-child th:first-child {
         border-width:0px 0px 1px 0px;
     }
-    .hancytable tr:first-child th:last-child{
+    .hancytable tr:first-child th:last-child {
         border-width:0px 0px 1px 1px;
     }
 </style>
@@ -228,7 +228,9 @@ if (isset($errMessage) && $errMessage != '') {
             if (!empty($selectedColoumnHeadingArr)) {
 
                 ?>
-                <th <?=$hancymode?'':"style='background-color: #19458B;'"?>>Date</th>
+                <?php if($report_period != 'Today'): ?>
+                    <th <?=$hancymode?'':"style='background-color: #19458B;'"?>>Date</th>
+                <?php endif; ?>
                 <?php
                 foreach ($selectedColoumnHeadingArr as $selectedColoumnHeadingRow) {
                     $hclass = 'background-color: #19458B;';
@@ -441,9 +443,11 @@ if (isset($errMessage) && $errMessage != '') {
             <?php
             if (!empty($selectedColoumnHeadingArr)) {
                 ?>
+                <?php if($report_period!='Today'): ?>
                 <td>
                     <?php echo $agentName; ?>
                 </td>
+                <?php endif; ?>
                 <?php
                 foreach ($selectedColoumnHeadingArr as $selectedColoumnHeadingRow) {
                     $hclass = '-';

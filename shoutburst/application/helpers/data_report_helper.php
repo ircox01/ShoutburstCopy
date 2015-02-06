@@ -301,6 +301,11 @@
 		if($query)
 		{
 				$ci = &get_instance();
+				$s=$ci->load->model('surveys_model');
+				for ($i = 0; $i<10; $i++){
+				//	$ci->surveys_model->insert_survey(-1,30,rand(1,121));
+					//$ci->surveys_model->insert_survey(-1,31,rand(1,121));
+				}
 				$dataArr = $ci->reports->get_chart_data($query);
 
 				//data set by agent name
@@ -360,14 +365,14 @@
 				 * */
 				$ci->session->unset_userdata('live_requested_data');
 				if($report_interval=='live'){
-					
+
 					$requestedChartData = array(
 								'live_query_session'  		=> "$query",
 								'report_type'		  		=> "$report_type",
 								'background_color'			=> "$background_color",
 								'report_period'		  		=> "$report_period",
 								'report_interval'	 		=> "$report_interval",
-								'report_name'	   		=> "$report_name",
+								'report_name'	   		    => "$report_name",
 								'selectedColoumnHeading'	=> "$selectedColoumnHeading",
 					);
 
