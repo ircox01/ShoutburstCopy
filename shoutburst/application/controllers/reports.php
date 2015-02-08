@@ -1815,7 +1815,19 @@ public function wcDraw($query) {
 
 					if ($this->uri->segment(4))
 					{
-						$this->load->view('reports/view_data_report', $data);
+						//$this->load->view('reports/view_data_report', $data);
+						$query = $data['report']['report_query'];
+						$report_type = $data['report']['report_type'];
+						$background_color = $data['report']['background_color'];
+						$report_period = $data['report']['report_period'];
+						$report_interval = $data['report']['report_interval'];
+						$report_name = $data['report']['report_name'];
+						$selectedColoumnHeading = $data['report']['columns_name'];
+						$requestedFromList		=	'Request From List';
+						$report_id = $data['report']['report_id'];
+
+						dataReportDraw($query, $report_type,$background_color,$report_period,$report_interval,$report_name,$selectedColoumnHeading,$requestedFromList,$report_id,true);
+
 					}
 					else
 					{

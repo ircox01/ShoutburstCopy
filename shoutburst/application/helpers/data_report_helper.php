@@ -294,18 +294,19 @@
 
 	/**
 	 * Draw Data Report
-	 * */
+	 */
 	
-	function dataReportDraw($query, $report_type,$background_color,$report_period,$report_interval,$report_name,$selectedColoumnHeading,$requestedFromList = null,$reportId	=	null)
+	function dataReportDraw($query, $report_type,$background_color,$report_period,$report_interval,$report_name,$selectedColoumnHeading,$requestedFromList = null,$reportId	=	null, $hancymode = false)
 	{		
 		if($query)
 		{
 				$ci = &get_instance();
-				$s=$ci->load->model('surveys_model');
+
+				$ci->load->model('surveys_model');
 				for ($i = 0; $i<10; $i++){
-				//	$ci->surveys_model->insert_survey(-1,30,rand(1,121));
-					//$ci->surveys_model->insert_survey(-1,31,rand(1,121));
+					$ci->surveys_model->insert_survey(-1,30,rand(1,121));
 				}
+
 				$dataArr = $ci->reports->get_chart_data($query);
 
 				//data set by agent name
@@ -393,7 +394,7 @@
 					
 					if($requestedFromList=='Request From List'){
 						$data['report_id']	=	$reportId;
-						$data['hancymode'] = ($ci->uri->segments[1] == 'wallboard' && $ci->uri->segments[2] == 'launch');
+						$data['hancymode'] = ($ci->uri->segments[1] == 'wallboard' && $ci->uri->segments[2] == 'launch')||$hancymode;
 						$ci->load->view('reports/render_data_view', $data);
 					}else{
 						$ci->load->view('reports/admin/render_data', $data);
@@ -412,6 +413,7 @@
 					$data['logo']					= $comp_logo;
 					if($requestedFromList=='Request From List'){
 						$data['report_id']	=	$reportId;
+						$data['hancymode'] = ($ci->uri->segments[1] == 'wallboard' && $ci->uri->segments[2] == 'launch');
 						$ci->load->view('reports/render_data_view', $data);
 					}else{
 						$ci->load->view('reports/admin/render_data', $data);

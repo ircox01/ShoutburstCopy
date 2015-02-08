@@ -543,19 +543,20 @@ if (strtolower($report_interval) == 'live') {
         var ajax_call = function () {
             jQuery.ajax({
                 type: "POST",
-                url: '$liveChartUpdate',
+                url: '<?=$liveChartUpdate?>',
                 async: true,
                 success: function (data) {
                     if (data) {
-                        jQuery('#test').html('');
-                        jQuery('#test').html(data);
+                        var builderHtml = jQuery('.queryBuilderHtml');
+                        builderHtml.html(data);
+                        //jQuery('queryBuilderHtml').html(data);
                     }
-                },
+                }
             });
         };
 
-        //var interval = 1000 * $liveChartDuration; // where X is your every X minutes (1000 * Sec * Minute) i.e for second interval  (1000 * 1) => 1 sec for minutes interval  (1000 * 60 * 1) => 1 Minutes
-        //var refreshIntervalId = setInterval(ajax_call, interval);
+        var interval = 1000 * <?=$liveChartDuration?>; // where X is your every X minutes (1000 * Sec * Minute) i.e for second interval  (1000 * 1) => 1 sec for minutes interval  (1000 * 60 * 1) => 1 Minutes
+        var refreshIntervalId = setInterval(ajax_call, interval);
 
     </script>
 <?php
@@ -582,6 +583,7 @@ if (strtolower($report_interval) == 'live') {
 <script>
     $(function () {
         var audio = document.getElementById('audio');
+        if (!audio) return false;
         $(".music_btn").on("click", function () {
             var data = $(this).attr("data-src");
             if (audio.paused) {
