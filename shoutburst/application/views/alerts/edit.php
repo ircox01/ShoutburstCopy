@@ -119,7 +119,14 @@
 			}
 			$("#filters1").val(conditionArray.toString());
 			return true;
-		}		
+		}
+	$("#score_type").on("change",function(){
+		if (this.value == "question score") {
+			$('#questions').slideDown();
+		} else {
+			$('#questions').slideUp();
+		}
+	});
 </script>
  
 <?php echo form_open_multipart('alerts/edit', array('name'=>'alerts', 'id'=>'editalerts', 'onsubmit'=>'return check_it()')) ?>
@@ -130,12 +137,13 @@
             <h4 class="modal-title">Update Alert</h4>
 </div>
         <div class="modal-body cf">
-          <div class="f orm-horizontal s b-form">
+          <div class="s b-form">
             <div class="form-group">
                     <input type="text" autocomplete="off" autofocus="autofocus" name="alert_name" id="alert_name" class="sb-control" 
                     value="<?php echo $alert[0]->alert_name;?>">
                     <input type="hidden" id="alert_id" name="alert_id" value="<?php echo $alert[0]->alert_id;?>">
             </div>
+
             <div class="form-group">
                      <select name="score_type" id="score_type" class="sb-control">                     	
                         <option value="">Score Type</option>
@@ -145,6 +153,19 @@
                       </select>  
                      <span id="e1" style="display:none;color:red;" ><i>Please select score type</i></span>                 
             </div>
+
+			  <div class="form-group" id="questions" style="display: none">
+				  <select name="score_type" id="question_score" class="sb-control">
+					  <option value="">Specify question</option>
+					  <option value="1">q1</option>
+					  <option value="2">q2</option>
+					  <option value="3">q3</option>
+					  <option value="4">q4</option>
+					  <option value="5">q5</option>
+				  </select>
+				  <span id="e1" style="display:none;color:red;" ><i>Please select question</i></span>
+			  </div>
+
 			<div class="form-group">
                      <select name="operator" id="operator" class="sb-control">
                         <option value="">Operator</option>
@@ -154,6 +175,9 @@
                       </select>     
                       <span class="error" for="operator" id="e2" style="display:none;color:red;"><i>Please select operator</i></span>                
             </div>
+
+
+
             <div class="form-group">
                      <input type="text" name="score" id="score1" class="sb-control" value="<?php //echo $alert[0]->score;?>">                    
            		<span class="error" for="score" id="e3" style="display:none;color:red;"><i>Please enter score</i></span>

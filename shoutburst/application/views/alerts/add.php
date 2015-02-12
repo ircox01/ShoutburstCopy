@@ -102,6 +102,11 @@
 
 	$("#score_type").on("change",function(){
 		$("#e1").css("display","none");
+		if (this.value == "question score") {
+			$('#questions').slideDown();
+		} else {
+			$('#questions').slideUp();
+		}
 	});
 	$("#operator").on("change",function(){
 		$("#e2").css("display","none");
@@ -119,19 +124,32 @@
             <h4 class="modal-title">New Alert</h4>
 </div>
         <div class="modal-body cf">
-          <div class="f orm-horizontal s b-form">
+          <div class=" s b-form">
             <div class="form-group">
                     <input type="text" autocomplete="off" autofocus="autofocus" name="alert_name" id="alert_name" class="sb-control" placeholder="Alert name">
             </div>
-            <div class="form-group" id="filters">
+              <div class="form-group" id="filters">
                      <select name="score_type" id="score_type" class="sb-control">
                         <option value="">Score Type</option>
                         <option value="total score">Total score</option>                
                         <option value="question score">Question score</option>
                         <option value="total surveys">Total surveys</option>
-                      </select>
-                      <span id="e1" style="display:none;color:red;" ><i>Please select score type</i></span> 
-             </div>
+                     </select>
+                     <span id="e1" style="display:none;color:red;" ><i>Please select score type</i></span>
+              </div>
+
+			  <div class="form-group" id="questions" style="display: none">
+				  <select name="score_type_data" id="question_score" class="sb-control">
+					  <option value="">Specify question</option>
+					  <option value="1">q1</option>
+					  <option value="2">q2</option>
+					  <option value="3">q3</option>
+					  <option value="4">q4</option>
+					  <option value="5">q5</option>
+				  </select>
+				  <span id="e1" style="display:none;color:red;" ><i>Please select question</i></span>
+			  </div>
+
                <div class="form-group">
                <select name="operator" id="operator" class="sb-control">
                         <option value="">Operator</option>
