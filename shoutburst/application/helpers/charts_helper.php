@@ -149,7 +149,7 @@ function render_chart($report, $from_dash=0)
 								//set type integer b/c when addition is done on this type it will remain integer for json encoding
 								settype($agentDataValue, "integer");
 								//check if same key exsist in array then sum up value for same key
-								if(isset($dataScoreArr[$totalRangeData[1]]))
+								if(isset ($totalRangeData[1]) && isset($dataScoreArr[$totalRangeData[1]]))
 								{
 									$agentDataValue	=	$dataScoreArr[$totalRangeData[1]] + $agentDataValue;
 								}
