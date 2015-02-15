@@ -563,7 +563,7 @@ if (strtolower($report_interval) == 'live') {
             $('.sort').remove();
             var spanHtml='<span style=\'display:inline\' class="sort glyphicon glyphicon-arrow-'+(!sortAsc?'up':'down')+'"></span>';
             colElement.append(spanHtml);
-            console.log(colElement);
+            //console.log(colElement);
 
             var rows=table.find('tbody tr');
             rows.sort(function(a, b) {
