@@ -302,12 +302,12 @@
 		{
 				$ci = &get_instance();
 
-			/*
-				$ci->load->model('surveys_model');
+
+				/*$ci->load->model('surveys_model');
 				for ($i = 0; $i<10; $i++){
 					$ci->surveys_model->insert_survey(-1,30,rand(1,121));
-				}
-			*/
+				}*/
+
 
 				$dataArr = $ci->reports->get_chart_data($query);
 

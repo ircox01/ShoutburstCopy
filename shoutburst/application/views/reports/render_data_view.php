@@ -66,7 +66,7 @@ $commonButtons = '';//commonButtons();
          border-collapse: collapse;
          border-spacing: 0;
          width:100%;
-         height:100%;
+         /*height:100%;*/
          margin:0px;padding:0px;
 
     }
@@ -80,6 +80,10 @@ $commonButtons = '';//commonButtons();
         -webkit-border-top-left-radius:20px;
         border-top-left-radius:20px;
     }
+    .hancytable table thead tr th {
+        cursor: hand;
+    }
+
     .hancytable table thead tr:first-child th:last-child {
         -moz-border-radius-topright:20px;
         -webkit-border-top-right-radius:20px;
@@ -102,7 +106,7 @@ $commonButtons = '';//commonButtons();
         border-width:0px 1px 1px 0px;
         text-align:left;
         padding:5px;
-        font-size:20px;
+        font-size:35px;
         font-family:Arial;
         font-weight:normal;
         color:#000000;
@@ -312,6 +316,7 @@ if (isset($errMessage) && $errMessage != '') {
 
         ?>
         <tbody>
+        <?php $t_data_res=array(); $t_data=array(); ?>
         <tr class='overall-total'>
             <?php
             if (!empty($selectedColoumnHeadingArr)) {
@@ -358,7 +363,7 @@ if (isset($errMessage) && $errMessage != '') {
 
                     ?>
                     <td style=' white-space: normal !important;' class='text-center'>
-                        <?php echo $hclass; ?>
+                        <?php echo $hclass; $t_data[]=$class?>
                     </td>
                 <?php
                 }
@@ -439,6 +444,7 @@ if (isset($errMessage) && $errMessage != '') {
 
         ?>
 
+        <?php if (!isset($t_data)) $t_data=array();  $t_data_res[]=$t_data;  ?>
         <tr class='overall-total'>
             <?php
             if (!empty($selectedColoumnHeadingArr)) {
@@ -488,7 +494,7 @@ if (isset($errMessage) && $errMessage != '') {
                     //$selectedColoumnHeadingRow=trim($selectedColoumnHeadingRow);
                     ?>
                     <td style=' white-space: normal !important;' class='text-center'>
-                        <?php echo $hclass; ?>
+                        <?php echo $hclass;$t_data[]=$hclass; ?>
                     </td>
                 <?php
                 }
@@ -538,6 +544,48 @@ if (strtolower($report_interval) == 'live') {
     $liveChartUpdate = site_url("reports/data_report_view/$report_id/liveRequest");
     ?>
     <script type="text/javascript">
+        var table = $('#myTable');
+        var tbody = table.find('tbody');
+        table.find('th').click(function (e) {
+            if(sort.col==this.cellIndex) {
+                sort.asc=!sort.asc
+            } else {
+                sort.col=this.cellIndex;
+                sort.asc=true;
+            };
+            sortTable();
+        });
+        var sortTable = function ()  {
+
+            var column = sort.col;
+            var sortAsc = sort.asc;
+            var colElement = table.find('thead tr th:nth-child('+(column+1)+')');
+            $('.sort').remove();
+            var spanHtml='<span style=\'display:inline\' class="sort glyphicon glyphicon-arrow-'+(!sortAsc?'up':'down')+'"></span>';
+            colElement.append(spanHtml);
+            console.log(colElement);
+
+            var rows=table.find('tbody tr');
+            rows.sort(function(a, b) {
+                var keyA = $('td:nth-child('+(column+1)+')',a).text();
+                var keyB = $('td:nth-child('+(column+1)+')',b).text();
+
+                if (sortAsc) {
+                    return (keyA > keyB) ? 1 : -1;  // A bigger than B, sorting ascending
+                } else {
+                    return (keyA < keyB) ? 1 : -1;  // B bigger than A, sorting descending
+                }
+            });
+            tbody.html('');
+            rows.each(function (i,row) {
+                tbody.append(row);
+            });
+        };
+        sort={
+            col:0,
+            asc:false
+        };
+        sortTable();
 
         // update chart
         var ajax_call = function () {
@@ -548,8 +596,11 @@ if (strtolower($report_interval) == 'live') {
                 success: function (data) {
                     if (data) {
                         var builderHtml = jQuery('.queryBuilderHtml');
-                        builderHtml.html(data);
-                        //jQuery('queryBuilderHtml').html(data);
+                        var temp = $(data);
+                        var tableBody = temp.find('table tbody');
+                        $('#myTable tbody').html(tableBody.html());
+                        sortTable();
+
                     }
                 }
             });
