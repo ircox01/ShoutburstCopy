@@ -56,7 +56,7 @@ class Alerts extends CI_Controller {
 		$data['alert'] = $this->alert_model->getAlertDetails($alert_id);
 		//$filters = explode(" ", $data['alert'][0]->filter_conditions);
 	
-	//	$filters = explode(" ", $filterArray);
+	    //$filters = explode(" ", $filterArray);
 		//$data['alert'][0]->score_type = $filters[0]; 
 		//$data['alert'][0]->operator = $filters[1];
 		//$data['alert'][0]->score = $filters[2];

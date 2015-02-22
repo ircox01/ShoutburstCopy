@@ -9,8 +9,7 @@ class Alert_model extends CI_Model {
 	}
 	
 	public function addAlert( $post = array(), $createdBy ='' , $comp_id='' )
-	{		
-		
+	{
 		$data = array(
 						'alert_name'		=>	$post['alert_name'],
 						'send_email'		=>	($post['send_email']=="on")?1:0,
@@ -25,7 +24,7 @@ class Alert_model extends CI_Model {
 						'comp_id'			=>  $comp_id
 				);
 		
-		$this->db->insert("alerts",$data);
+		$this->db->insert("alerts", $data);
 	}
 	
 	public function getAlerts($comp_id='')

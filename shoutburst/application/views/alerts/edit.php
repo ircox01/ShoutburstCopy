@@ -145,7 +145,7 @@
             </div>
 
             <div class="form-group">
-                     <select name="score_type" id="score_type" class="sb-control">                     	
+                     <select name="score_type" id="score_type" class="sb-control">
                         <option value="">Score Type</option>
                         <option value="total score" >Total score</option>                
                         <option value="question score" >Question score</option>
@@ -155,7 +155,7 @@
             </div>
 
 			  <div class="form-group" id="questions" style="display: none">
-				  <select name="score_type" id="question_score" class="sb-control">
+				  <select name="score_type_data" id="question_score" class="sb-control">
 					  <option value="">Specify question</option>
 					  <option value="1">q1</option>
 					  <option value="2">q2</option>
