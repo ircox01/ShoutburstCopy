@@ -91,4 +91,7 @@ class Alerts extends CI_Controller {
 			$this->session->set_flashdata('message', '<div id="message" class="error">Error while deleting.</div>');
 		}	
 	}
+    public function hourly() {
+        echo 'hourly';
+    }
 }

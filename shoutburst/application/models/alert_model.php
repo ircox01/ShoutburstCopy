@@ -32,7 +32,17 @@ class Alert_model extends CI_Model {
 		$result = $this->db->query("SELECT a.alert_id, a.alert_name, a.status, DATE_FORMAT(a.created_on,'%Y-%m-%d %H:%i') as createdon, u.full_name,a.filter_conditions FROM alerts a JOIN users u ON a.created_by=u.user_id WHERE comp_id=$comp_id ORDER BY createdon DESC ")->result_array();
 		return $result;
 	}
-	
+
+    public function getHourly() {
+        $res = $this->db->query("SELECT * FROM alerts WHERE alert_period='lasthour'")->result_array();
+        return $res;
+    }
+
+    public function process($alert_id) {
+        $alert = $this->db->query("SELECT * FROM alerts WHERE alert_id = " . $this->db->escape($alert_id))->result_array();
+        var_dump($alert);
+    }
+
 	public function getAlertDetails($alert_id)
 	{
 		$this->db->where("alert_id", $alert_id);
