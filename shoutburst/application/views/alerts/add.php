@@ -36,9 +36,8 @@
 	{
 		scoretype = document.getElementById('score_type');
 		score_type = scoretype.options[scoretype.selectedIndex].value;
-        var score_type_data = $('#question_score').val();
+        var score_type_data = score_type=='question score' ? $('#question_score').val() : false;
         var filter_ = score_type_data ? ' : q'+score_type_data+' ' : '';
-        console.log(score_type_data);
 		operator1 = document.getElementById('operator');
 		operator =operator1.options[operator1.selectedIndex].value;			
 	    score=document.getElementById('score1').value;

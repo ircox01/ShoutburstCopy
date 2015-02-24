@@ -40,7 +40,44 @@ class Alert_model extends CI_Model {
 
     public function process($alert_id) {
         $alert = $this->db->query("SELECT * FROM alerts WHERE alert_id = " . $this->db->escape($alert_id))->result_array();
-        var_dump($alert);
+        $filters = explode(',',$alert[0]['filter_conditions']);
+        $where = array();
+        $where[] = "comp_id = ".$this->db->escape($alert[0]['comp_id']);
+
+        foreach ($filters as $filterPos => $filter) {
+            $filter = trim($filter);
+            preg_match_all('/(Or)?(And)?(.*)\h?([<,>,=])\h?([0-9]*)/i', $filter, $conditions, PREG_SET_ORDER);
+            //var_dump($conditions, $filterPos);
+            $flags = array('Word','Filter','Operator','Value');
+            $res = array();
+            if ($filterPos == 0 )
+                array_splice($flags,0,1);
+                $res['Word'] = '';
+            $i=0;
+            foreach ($conditions[0] as $key=>$condition) {
+                if ($condition != '' && $key != 0) {
+                    $res[$flags[$i]] = trim($condition);
+                    $i++;
+                }
+            }
+            //var_dump('Filter ' . $res['Filter']);
+            /** Now Prepare Where Cond */
+            $filter = explode(':', $res['Filter']);
+
+            switch (trim($filter[0])) {
+                case 'total score':
+                    $where[] = "{$res['Word']} total_score {$res['Operator']} " . $this->db->escape($res['Value']);
+                    break;
+                case 'question score':
+                    echo "ASF \n\r";
+
+                    var_dump($temp);
+                    break;
+                case 'total surveys':
+                    break;
+            }
+        }
+
     }
 
 	public function getAlertDetails($alert_id)
