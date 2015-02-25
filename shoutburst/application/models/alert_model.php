@@ -41,15 +41,17 @@ class Alert_model extends CI_Model {
     public function process($alert_id) {
         $alert = $this->db->query("SELECT * FROM alerts WHERE alert_id = " . $this->db->escape($alert_id))->result_array();
         $filters = explode(',',$alert[0]['filter_conditions']);
-        $where = array();
-        $where[] = "comp_id = ".$this->db->escape($alert[0]['comp_id']);
+        $the_filters = array();
+        $evil = "";
+        $where_comp = "comp_id = " . $this->db->escape($alert[0]['comp_id']);
 
-        foreach ($filters as $filterPos => $filter) {
+        foreach ($filters as $filterPos => &$filter) {
             $filter = trim($filter);
             preg_match_all('/(Or)?(And)?(.*)\h?([<,>,=])\h?([0-9]*)/i', $filter, $conditions, PREG_SET_ORDER);
             //var_dump($conditions, $filterPos);
             $flags = array('Word','Filter','Operator','Value');
             $res = array();
+
             if ($filterPos == 0 )
                 array_splice($flags,0,1);
                 $res['Word'] = '';
@@ -60,24 +62,50 @@ class Alert_model extends CI_Model {
                     $i++;
                 }
             }
-            //var_dump('Filter ' . $res['Filter']);
+            //var_dump('Filter ' .$res['Word'] .' '. $res['Filter']);
             /** Now Prepare Where Cond */
             $filter = explode(':', $res['Filter']);
-
             switch (trim($filter[0])) {
                 case 'total score':
-                    $where[] = "{$res['Word']} total_score {$res['Operator']} " . $this->db->escape($res['Value']);
+                    $where = " total_score {$res['Operator']} " . $this->db->escape($res['Value']);
+                    $rows = $this->db->query("SELECT * FROM surveys WHERE $where_comp AND $where")->num_rows();
+                    $res['Rows'] = $rows;
+                    //echo "Total Score is $rows \n\r";
                     break;
                 case 'question score':
-                    echo "ASF \n\r";
-
-                    var_dump($temp);
+                    $filter[1] = trim($filter[1]);
+                    if ($filter[1] != '') {
+                        $temp = array();
+                        for ($i = 1; $i<6; $i++) {
+                            $temp[] = "q$i {$res['Operator']} " . $this->db->escape($res['Value']);
+                        }
+                        $where = implode(' OR ', $temp);
+                        $rows = $this->db->query("SELECT * FROM surveys WHERE $where_comp AND $where")->num_rows();
+                        //echo "Question Score result $rows \n\r";
+                        $res['Rows'] = $rows;
+                    }
                     break;
                 case 'total surveys':
+                    $sql = "SELECT * FROM surveys WHERE comp_id =" . $this->db->escape($alert[0]['comp_id']);
+                    $rows = $this->db->query($sql)->num_rows();
+                    $res['Rows'] = $rows;
                     break;
             }
+            $the_filters[] = $res;
+            if ($res['Operator'] == '=') {
+                $res ['Operator'] = '==';
+            }
+            $evil .= " {$res['Word']} {$res['Rows']} {$res['Operator']} {$res['Value']}";
         }
+        $ev = false;
 
+        /** I apologize for this but not I started this... */
+        eval('$ev = '."($evil);");
+
+        if ($ev) {
+            /** Processing this alert */
+            echo "Processing the Alert {$alert[0]['alert_name']}\n\r";
+        }
     }
 
 	public function getAlertDetails($alert_id)
