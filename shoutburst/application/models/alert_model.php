@@ -48,13 +48,12 @@ class Alert_model extends CI_Model {
         foreach ($filters as $filterPos => &$filter) {
             $filter = trim($filter);
             preg_match_all('/(Or)?(And)?(.*)\h?([<,>,=])\h?([0-9]*)/i', $filter, $conditions, PREG_SET_ORDER);
-            //var_dump($conditions, $filterPos);
             $flags = array('Word','Filter','Operator','Value');
             $res = array();
-
-            if ($filterPos == 0 )
+            if ($filterPos == 0 ) {
                 array_splice($flags,0,1);
                 $res['Word'] = '';
+            }
             $i=0;
             foreach ($conditions[0] as $key=>$condition) {
                 if ($condition != '' && $key != 0) {
@@ -70,7 +69,6 @@ class Alert_model extends CI_Model {
                     $where = " total_score {$res['Operator']} " . $this->db->escape($res['Value']);
                     $rows = $this->db->query("SELECT * FROM surveys WHERE $where_comp AND $where")->num_rows();
                     $res['Rows'] = $rows;
-                    //echo "Total Score is $rows \n\r";
                     break;
                 case 'question score':
                     $filter[1] = trim($filter[1]);
@@ -107,8 +105,27 @@ class Alert_model extends CI_Model {
 
         if ($ev) {
             /** Processing this alert */
-            echo "Processing the Alert {$alert[0]['alert_name']}\n\r";
-            mail('godlyfast@gmail.com','test Subj','Asdlkasdj asldkj asldskda alsdkj');
+            echo "Processing the Alert: {$alert[0]['alert_name']}\n\r";
+
+            if ($alert[0]['send_email']=='1') {
+                echo "Sending alert to Emails: {$alert[0]['email_addresses']}\n\r";
+
+                define('MAILGUN_KEY', 'key-8df44f888ac044a680ff0ab8a9382650');
+                define('MAILGUN_DOMAIN', 'sandbox23e0a689704941c49e61c3dda8e93b89.mailgun.org');
+
+                $mg = new \Mailgun\Mailgun(MAILGUN_KEY);
+
+                $mg->sendMessage(MAILGUN_DOMAIN, array(
+                    'from'    => 'Shoutburst <YOU@YOUR_DOMAIN_NAME>',
+                    'to'      => $alert[0]['email_addresses'],
+                    'subject' => 'Alert ' . $alert[0]['alert_name'],
+                    'text'    => 'Alert conditions: '.$alert[0]['filter_conditions']
+                ));
+            }
+
+            if ($alert[0]['send_sms']=='1') {
+
+            }
         }
     }
 
