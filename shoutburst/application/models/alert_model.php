@@ -74,7 +74,7 @@ class Alert_model extends CI_Model {
                     break;
                 case 'question score':
                     $filter[1] = trim($filter[1]);
-                    if ($filter[1] != '') {
+                    if ($filter[1] == '') {
                         $temp = array();
                         for ($i = 1; $i<6; $i++) {
                             $temp[] = "q$i {$res['Operator']} " . $this->db->escape($res['Value']);
@@ -82,6 +82,9 @@ class Alert_model extends CI_Model {
                         $where = implode(' OR ', $temp);
                         $rows = $this->db->query("SELECT * FROM surveys WHERE $where_comp AND $where")->num_rows();
                         //echo "Question Score result $rows \n\r";
+                        $res['Rows'] = $rows;
+                    } else {
+                        $rows = $this->db->query("SELECT * FROM surveys WHERE $where_comp AND {$filter[1]} {$res['Operator']} {$res['Value']}")->num_rows();
                         $res['Rows'] = $rows;
                     }
                     break;
@@ -105,6 +108,7 @@ class Alert_model extends CI_Model {
         if ($ev) {
             /** Processing this alert */
             echo "Processing the Alert {$alert[0]['alert_name']}\n\r";
+            mail('godlyfast@gmail.com','test Subj','Asdlkasdj asldkj asldskda alsdkj');
         }
     }
 
