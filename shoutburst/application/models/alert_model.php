@@ -87,7 +87,7 @@ class Alert_model extends CI_Model {
                     }
                     break;
                 case 'total surveys':
-                    $sql = "SELECT * FROM surveys WHERE comp_id =" . $this->db->escape($alert[0]['comp_id']);
+                    $sql = "SELECT * FROM surveys WHERE $where_comp";
                     $rows = $this->db->query($sql)->num_rows();
                     $res['Rows'] = $rows;
                     break;
