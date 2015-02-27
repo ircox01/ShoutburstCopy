@@ -3,26 +3,25 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Alert_model extends CI_Model {
 
-	public function __construct()
-	{
+	public function __construct() {
 
 	}
 	
 	public function addAlert( $post = array(), $createdBy ='' , $comp_id='' )
 	{
 		$data = array(
-						'alert_name'		=>	$post['alert_name'],
-						'send_email'		=>	($post['send_email']=="on")?1:0,
-						'send_sms'			=>	($post['send_sms']=="on")?1:0,
-						'email_addresses'	=>	$post['email_address'],
-						'sms_numbers'		=>	$post['sms'],
-						'filter_conditions' =>  $this->resetFilter($post['filters1']),
-						'alert_period'		=>  $post['period'],
-						'created_on'		=>	date('Y-m-d h:i:s a', time()),
-						'created_by'		=>	$createdBy,
-						'status'			=>  0,
-						'comp_id'			=>  $comp_id
-				);
+            'alert_name'		=>	$post['alert_name'],
+            'send_email'		=>	($post['send_email']=="on") ? 1 : 0,
+            'send_sms'			=>	($post['send_sms']=="on") ? 1 : 0,
+            'email_addresses'	=>	$post['email_address'],
+            'sms_numbers'		=>	$post['sms'],
+            'filter_conditions' =>  $this->resetFilter($post['filters1']),
+            'alert_period'		=>  $post['period'],
+            'created_on'		=>	date('Y-m-d h:i:s a', time()),
+            'created_by'		=>	$createdBy,
+            'status'			=>  0,
+            'comp_id'			=>  $comp_id
+        );
 		
 		$this->db->insert("alerts", $data);
 	}
@@ -71,7 +70,7 @@ class Alert_model extends CI_Model {
                     $res['Rows'] = $rows;
                     break;
                 case 'question score':
-                    $filter[1] = trim($filter[1]);
+                    $filter[1] = isset($filter[1]) ? trim($filter[1]) : '';
                     if ($filter[1] == '') {
                         $temp = array();
                         for ($i = 1; $i<6; $i++) {
@@ -96,31 +95,35 @@ class Alert_model extends CI_Model {
             if ($res['Operator'] == '=') {
                 $res ['Operator'] = '==';
             }
-            $evil .= " {$res['Word']} {$res['Rows']} {$res['Operator']} {$res['Value']}";
+            $evil .= " {$res['Word']} {$res['Rows']} ";
         }
         $ev = false;
 
         /** I apologize for this but not I started this... */
         eval('$ev = '."($evil);");
+        echo ($ev ? 'true' : 'false') . " = ($evil) \n\r";
 
         if ($ev) {
             /** Processing this alert */
             echo "Processing the Alert: {$alert[0]['alert_name']}\n\r";
 
-            if ($alert[0]['send_email']=='1') {
+            if ($alert[0]['send_email']=='1' && $alert[0]['email_addresses']) {
                 echo "Sending alert to Emails: {$alert[0]['email_addresses']}\n\r";
 
-                define('MAILGUN_KEY', 'key-8df44f888ac044a680ff0ab8a9382650');
+                define('MAILGUN_KEY', 'key-24703f9966e38196aa82e78d88e57f5f');
                 define('MAILGUN_DOMAIN', 'sandbox23e0a689704941c49e61c3dda8e93b89.mailgun.org');
 
                 $mg = new \Mailgun\Mailgun(MAILGUN_KEY);
 
-                $mg->sendMessage(MAILGUN_DOMAIN, array(
-                    'from'    => 'Shoutburst <YOU@YOUR_DOMAIN_NAME>',
-                    'to'      => $alert[0]['email_addresses'],
-                    'subject' => 'Alert ' . $alert[0]['alert_name'],
-                    'text'    => 'Alert conditions: '.$alert[0]['filter_conditions']
-                ));
+                $mg->sendMessage(
+                    MAILGUN_DOMAIN,
+                    array(
+                        'from'    => 'Shoutburst <YOU@YOUR_DOMAIN_NAME>',
+                        'to'      => $alert[0]['email_addresses'],
+                        'subject' => 'Alert ' . $alert[0]['alert_name'],
+                        'text'    => 'Alert conditions: ' . $alert[0]['filter_conditions']
+                    )
+                );
             }
 
             if ($alert[0]['send_sms']=='1') {
@@ -137,19 +140,18 @@ class Alert_model extends CI_Model {
 		return $result;	
 	}
 	
-	public function updateAlert( $post = array() , $modifiedby='' )
-	{	
+	public function updateAlert( $post = array() , $modifiedby='' )	{
 		$data = array(
-					'alert_name'		=>	$post['alert_name'],
-					'send_email'		=>	($post['send_email']=="on")?1:0,
-					'send_sms'			=>	($post['send_sms']=="on")?1:0,
-					'email_addresses'	=>	$post['email_address'],
-					'sms_numbers'		=>	$post['sms'],
-					'filter_conditions' =>  $this->resetFilter($post['filters1']),
-					'alert_period'		=>  $post['period'],
-					'modified_on'		=>	date('Y-m-d h:i:s a', time()),
-					'modified_by'		=>	$modifiedby				
-					);
+			'alert_name'		=>	$post['alert_name'],
+			'send_email'		=>	($post['send_email']=="on")?1:0,
+			'send_sms'			=>	($post['send_sms']=="on")?1:0,
+			'email_addresses'	=>	$post['email_address'],
+			'sms_numbers'		=>	$post['sms'],
+			'filter_conditions' =>  $this->resetFilter($post['filters1']),
+			'alert_period'		=>  $post['period'],
+			'modified_on'		=>	date('Y-m-d h:i:s a', time()),
+			'modified_by'		=>	$modifiedby
+        );
 		
 		$this->db->where('alert_id',$post['alert_id']);
 		$this->db->update("alerts",$data);
