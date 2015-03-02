@@ -7,8 +7,7 @@ class Alert_model extends CI_Model {
 
 	}
 	
-	public function addAlert( $post = array(), $createdBy ='' , $comp_id='' )
-	{
+	public function addAlert( $post = array(), $createdBy ='' , $comp_id='' ) {
 		$data = array(
             'alert_name'		=>	$post['alert_name'],
             'send_email'		=>	($post['send_email']=="on") ? 1 : 0,
@@ -26,8 +25,7 @@ class Alert_model extends CI_Model {
 		$this->db->insert("alerts", $data);
 	}
 	
-	public function getAlerts($comp_id='')
-	{
+	public function getAlerts($comp_id = '') {
 		$result = $this->db->query("SELECT a.alert_id, a.alert_name, a.status, DATE_FORMAT(a.created_on,'%Y-%m-%d %H:%i') as createdon, u.full_name,a.filter_conditions FROM alerts a JOIN users u ON a.created_by=u.user_id WHERE comp_id=$comp_id ORDER BY createdon DESC ")->result_array();
 		return $result;
 	}
@@ -43,6 +41,19 @@ class Alert_model extends CI_Model {
         $the_filters = array();
         $evil = "";
         $where_comp = "comp_id = " . $this->db->escape($alert[0]['comp_id']);
+        $where_period = 'date_time > 0';
+        $date = new DateTime();
+
+        switch ($alert[0]['alert_period']) {
+            case 'lasthour':
+                $date->modify('-1 hour');
+                $where_period = 'date_time > ' . $this->db->escape($date->format('Y-m-d H:i:s'));
+                break;
+            case 'todate':
+                $date->modify('-1 day');
+                $where_period = 'date_time > ' . $this->db->escape($date->format('Y-m-d H:i:s'));
+                break;
+        }
 
         foreach ($filters as $filterPos => &$filter) {
             $filter = trim($filter);
@@ -66,7 +77,9 @@ class Alert_model extends CI_Model {
             switch (trim($filter[0])) {
                 case 'total score':
                     $where = " total_score {$res['Operator']} " . $this->db->escape($res['Value']);
-                    $rows = $this->db->query("SELECT * FROM surveys WHERE $where_comp AND $where")->num_rows();
+                    $sql = "SELECT * FROM surveys WHERE ($where_period) AND ($where_comp) AND ($where)";
+                    echo "$sql \r\n";
+                    $rows = $this->db->query($sql)->num_rows();
                     $res['Rows'] = $rows;
                     break;
                 case 'question score':
@@ -77,16 +90,16 @@ class Alert_model extends CI_Model {
                             $temp[] = "q$i {$res['Operator']} " . $this->db->escape($res['Value']);
                         }
                         $where = implode(' OR ', $temp);
-                        $rows = $this->db->query("SELECT * FROM surveys WHERE $where_comp AND $where")->num_rows();
+                        $rows = $this->db->query("SELECT * FROM surveys WHERE ($where_period) AND ($where_comp) AND ($where)")->num_rows();
                         //echo "Question Score result $rows \n\r";
                         $res['Rows'] = $rows;
                     } else {
-                        $rows = $this->db->query("SELECT * FROM surveys WHERE $where_comp AND {$filter[1]} {$res['Operator']} {$res['Value']}")->num_rows();
+                        $rows = $this->db->query("SELECT * FROM surveys WHERE ($where_period) AND ($where_comp) AND ({$filter[1]} {$res['Operator']} {$res['Value']})")->num_rows();
                         $res['Rows'] = $rows;
                     }
                     break;
                 case 'total surveys':
-                    $sql = "SELECT * FROM surveys WHERE $where_comp";
+                    $sql = "SELECT * FROM surveys WHERE ($where_period) AND ($where_comp)";
                     $rows = $this->db->query($sql)->num_rows();
                     $res['Rows'] = $rows;
                     break;
@@ -100,7 +113,7 @@ class Alert_model extends CI_Model {
         $ev = false;
 
         /** I apologize for this but not I started this... */
-        eval('$ev = '."($evil);");
+        eval ('$ev = ' . "($evil);");
         echo ($ev ? 'true' : 'false') . " = ($evil) \n\r";
 
         if ($ev) {
@@ -132,8 +145,7 @@ class Alert_model extends CI_Model {
         }
     }
 
-	public function getAlertDetails($alert_id)
-	{
+	public function getAlertDetails($alert_id) {
 		$this->db->where("alert_id", $alert_id);
 		$this->db->from("alerts");
 		$result = $this->db->get()->result();
@@ -157,14 +169,12 @@ class Alert_model extends CI_Model {
 		$this->db->update("alerts",$data);
 	}
 	
-	public function delete( $alert_id='')
-	{
+	public function delete( $alert_id='') {
 		$this->db->where('alert_id', $alert_id);		
 		$this->db->delete('alerts');
 	}
 	
-	private function resetFilter($filters1)
-	{
+	private function resetFilter($filters1)	{
 		$filters1 = implode(", ",array_filter(explode(",",$filters1)));
 		$filters1 = explode(",",$filters1);
 		$filters1[0] = preg_replace("/\s*(\bOr\b)|(\bAnd\b)\s*/i", "", $filters1[0]);	

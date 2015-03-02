@@ -1,7 +1,8 @@
 <?php
 /**
  * @author Arshad
- * */
+ *
+ */
 	/**
 	 * Get Detail Coloumn
 	 * 
