@@ -31,17 +31,26 @@ class Alert_model extends CI_Model {
 	}
 
     public function getHourly() {
-        $res = $this->db->query("SELECT * FROM alerts WHERE alert_period='lasthour'")->result_array();
-        return $res;
+        return  $this->db->query("SELECT * FROM alerts WHERE alert_period='lasthour'")->result_array();
+    }
+
+    public  function  getDaily() {
+        return $this->db->query("SELECT * FROM alerts WHERE alert_period='todate'")->result_array();
+    }
+
+    public function getEveryCall() {
+        return $this->db->query("SELECT * FROM alerts WHERE alert_period='everycall'")->result_array();
     }
 
     public function process($alert_id) {
         $alert = $this->db->query("SELECT * FROM alerts WHERE alert_id = " . $this->db->escape($alert_id))->result_array();
+        echo "Processing {$alert[0]['alert_period']} Alert {$alert[0]['alert_name']} {$alert[0]['filter_conditions']} \n\r";
         $filters = explode(',',$alert[0]['filter_conditions']);
         $the_filters = array();
         $evil = "";
         $where_comp = "comp_id = " . $this->db->escape($alert[0]['comp_id']);
         $where_period = 'date_time > 0';
+        $where_id = 'sur_id > 0';
         $date = new DateTime();
 
         switch ($alert[0]['alert_period']) {
@@ -52,6 +61,9 @@ class Alert_model extends CI_Model {
             case 'todate':
                 $date->modify('-1 day');
                 $where_period = 'date_time > ' . $this->db->escape($date->format('Y-m-d H:i:s'));
+                break;
+            case 'everycall':
+                $where_id = 'sur_id = '.$this->db->escape($this->db->insert_id());
                 break;
         }
 
@@ -71,13 +83,16 @@ class Alert_model extends CI_Model {
                     $i++;
                 }
             }
+            if ($res['Operator'] == '=') {
+                $res ['Operator'] = '==';
+            }
             //var_dump('Filter ' .$res['Word'] .' '. $res['Filter']);
             /** Now Prepare Where Cond */
             $filter = explode(':', $res['Filter']);
             switch (trim($filter[0])) {
                 case 'total score':
                     $where = " total_score {$res['Operator']} " . $this->db->escape($res['Value']);
-                    $sql = "SELECT * FROM surveys WHERE ($where_period) AND ($where_comp) AND ($where)";
+                    $sql = "SELECT * FROM surveys WHERE ($where_period) AND ($where_comp) AND ($where) AND ($where_id)";
                     echo "$sql \r\n";
                     $rows = $this->db->query($sql)->num_rows();
                     $res['Rows'] = $rows;
@@ -90,24 +105,23 @@ class Alert_model extends CI_Model {
                             $temp[] = "q$i {$res['Operator']} " . $this->db->escape($res['Value']);
                         }
                         $where = implode(' OR ', $temp);
-                        $rows = $this->db->query("SELECT * FROM surveys WHERE ($where_period) AND ($where_comp) AND ($where)")->num_rows();
+                        $rows = $this->db->query("SELECT * FROM surveys WHERE ($where_period) AND ($where_comp) AND ($where) AND ($where_id)")->num_rows();
                         //echo "Question Score result $rows \n\r";
                         $res['Rows'] = $rows;
                     } else {
-                        $rows = $this->db->query("SELECT * FROM surveys WHERE ($where_period) AND ($where_comp) AND ({$filter[1]} {$res['Operator']} {$res['Value']})")->num_rows();
+                        $rows = $this->db->query("SELECT * FROM surveys WHERE ($where_period) AND ($where_comp) AND ($where_id) AND ({$filter[1]} {$res['Operator']} {$res['Value']})")->num_rows();
                         $res['Rows'] = $rows;
                     }
                     break;
                 case 'total surveys':
                     $sql = "SELECT * FROM surveys WHERE ($where_period) AND ($where_comp)";
                     $rows = $this->db->query($sql)->num_rows();
-                    $res['Rows'] = $rows;
+                    $eval_str = '$res[\'Rows\'] = ' . "($rows {$res['Operator']} {$res['Value']})?1:0;";
+                    eval ($eval_str);
                     break;
             }
             $the_filters[] = $res;
-            if ($res['Operator'] == '=') {
-                $res ['Operator'] = '==';
-            }
+
             $evil .= " {$res['Word']} {$res['Rows']} ";
         }
         $ev = false;
@@ -118,7 +132,7 @@ class Alert_model extends CI_Model {
 
         if ($ev) {
             /** Processing this alert */
-            echo "Processing the Alert: {$alert[0]['alert_name']}\n\r";
+            echo "Alert conditions are true!\n\r";
 
             if ($alert[0]['send_email']=='1' && $alert[0]['email_addresses']) {
                 echo "Sending alert to Emails: {$alert[0]['email_addresses']}\n\r";
