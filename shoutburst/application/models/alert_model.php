@@ -137,8 +137,8 @@ class Alert_model extends CI_Model {
             if ($alert[0]['send_email']=='1' && $alert[0]['email_addresses']) {
                 echo "Sending alert to Emails: {$alert[0]['email_addresses']}\n\r";
 
-                define('MAILGUN_KEY', 'key-24703f9966e38196aa82e78d88e57f5f');
-                define('MAILGUN_DOMAIN', 'sandbox23e0a689704941c49e61c3dda8e93b89.mailgun.org');
+                define('MAILGUN_KEY', 'key-fd36f8a5922184c166b613f2b2ad9d9c');
+                define('MAILGUN_DOMAIN', 'sandbox20159935eca54c1793b8124ae32c39f5.mailgun.org');
 
                 $mg = new \Mailgun\Mailgun(MAILGUN_KEY);
 
