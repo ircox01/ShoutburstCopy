@@ -84,16 +84,16 @@ class Alert_model extends CI_Model {
                 }
             }
             if ($res['Operator'] == '=') {
-                $res ['Operator'] = '==';
+                $res ['phpOperator'] = '==';
             }
-            //var_dump('Filter ' .$res['Word'] .' '. $res['Filter']);
+
             /** Now Prepare Where Cond */
             $filter = explode(':', $res['Filter']);
             switch (trim($filter[0])) {
                 case 'total score':
                     $where = " total_score {$res['Operator']} " . $this->db->escape($res['Value']);
                     $sql = "SELECT * FROM surveys WHERE ($where_period) AND ($where_comp) AND ($where) AND ($where_id)";
-                    echo "$sql \r\n";
+                    //echo "$sql \r\n";
                     $rows = $this->db->query($sql)->num_rows();
                     $res['Rows'] = $rows;
                     break;
@@ -101,7 +101,7 @@ class Alert_model extends CI_Model {
                     $filter[1] = isset($filter[1]) ? trim($filter[1]) : '';
                     if ($filter[1] == '') {
                         $temp = array();
-                        for ($i = 1; $i<6; $i++) {
+                        for ($i = 1; $i < 6; $i++) {
                             $temp[] = "q$i {$res['Operator']} " . $this->db->escape($res['Value']);
                         }
                         $where = implode(' OR ', $temp);
@@ -116,19 +116,19 @@ class Alert_model extends CI_Model {
                 case 'total surveys':
                     $sql = "SELECT * FROM surveys WHERE ($where_period) AND ($where_comp)";
                     $rows = $this->db->query($sql)->num_rows();
-                    $eval_str = '$res[\'Rows\'] = ' . "($rows {$res['Operator']} {$res['Value']})?1:0;";
+                    $operator = isset($res['phpOperator']) ? $res['phpOperator'] : $res['Operator'];
+                    $eval_str = '$res[\'Rows\'] = ' . "($rows $operator {$res['Value']})?1:0;";
                     eval ($eval_str);
                     break;
             }
             $the_filters[] = $res;
-
             $evil .= " {$res['Word']} {$res['Rows']} ";
         }
         $ev = false;
 
         /** I apologize for this but not I started this... */
         eval ('$ev = ' . "($evil);");
-        echo ($ev ? 'true' : 'false') . " = ($evil) \n\r";
+        //echo ($ev ? 'true' : 'false') . " = ($evil) \n\r";
 
         if ($ev) {
             /** Processing this alert */

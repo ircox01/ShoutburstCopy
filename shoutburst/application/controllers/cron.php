@@ -13,7 +13,6 @@ class Cron extends CI_Controller {
 
     public function hourly() {
         echo "Hourly cronjob\r\n";
-
         //$this->surveys_model->insert_rand_surveys(2,100);
         //$this->surveys_model->insert_rand_surveys(30,1);
         $hourlyAlerts = $this->alert_model->getHourly();
@@ -22,6 +21,7 @@ class Cron extends CI_Controller {
             $this->alert_model->process($hourlyAlert['alert_id']);
         }
     }
+
     public function daily() {
         echo "Daily cronjob\r\n";
         $dailyAlerts = $this->alert_model->getDaily();
