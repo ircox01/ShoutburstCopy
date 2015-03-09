@@ -133,15 +133,9 @@ class Alert_model extends CI_Model {
         if ($ev) {
             /** Processing this alert */
             echo "Alert conditions are true!\n\r";
-
             if ($alert[0]['send_email']=='1' && $alert[0]['email_addresses']) {
                 echo "Sending alert to Emails: {$alert[0]['email_addresses']}\n\r";
-
-                define('MAILGUN_KEY', 'key-fd36f8a5922184c166b613f2b2ad9d9c');
-                define('MAILGUN_DOMAIN', 'sandbox20159935eca54c1793b8124ae32c39f5.mailgun.org');
-
                 $mg = new \Mailgun\Mailgun(MAILGUN_KEY);
-
                 $mg->sendMessage(
                     MAILGUN_DOMAIN,
                     array(
@@ -152,7 +146,6 @@ class Alert_model extends CI_Model {
                     )
                 );
             }
-
             if ($alert[0]['send_sms']=='1') {
 
             }

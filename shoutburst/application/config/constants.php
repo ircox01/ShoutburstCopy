@@ -54,6 +54,9 @@ define('LOG_FOLDER', 'logs');
 define('SECURITYCODE_LENGTH',12);
 define('SALT','7XryE48NboQ');
 
+define('MAILGUN_KEY', 'key-fd36f8a5922184c166b613f2b2ad9d9c');
+define('MAILGUN_DOMAIN', 'sandbox20159935eca54c1793b8124ae32c39f5.mailgun.org');
+
 /**Chart Using Constant*/
 
 define('LIVE_INTERVAL',					'300'); //currently set 5 min i.e get last 5 min data 5*60=300
