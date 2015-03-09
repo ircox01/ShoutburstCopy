@@ -1,5 +1,6 @@
 <?php
 /**
+ * class Surveys
  * @property Surveys_model $surveys_model
  */
 class Surveys extends CI_Controller {

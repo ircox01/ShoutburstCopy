@@ -24,6 +24,12 @@
  * @author		ExpressionEngine Dev Team
  * @link		http://codeigniter.com/user_guide/libraries/config.html
  */
+
+/**
+ * Class CI_Model
+ * @property CI_DB_active_record $db
+ */
+
 class CI_Model {
 
 	/**
