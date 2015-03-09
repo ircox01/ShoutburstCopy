@@ -109,7 +109,8 @@ class Alert_model extends CI_Model {
                         //echo "Question Score result $rows \n\r";
                         $res['Rows'] = $rows;
                     } else {
-                        $rows = $this->db->query("SELECT * FROM surveys WHERE ($where_period) AND ($where_comp) AND ($where_id) AND ({$filter[1]} {$res['Operator']} {$res['Value']})")->num_rows();
+                        $sql = "SELECT * FROM surveys WHERE ($where_period) AND ($where_comp) AND ($where_id) AND ({$filter[1]} {$res['Operator']} {$res['Value']})";
+                        $rows = $this->db->query($sql)->num_rows();
                         $res['Rows'] = $rows;
                     }
                     break;

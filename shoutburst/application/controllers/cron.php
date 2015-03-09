@@ -28,6 +28,5 @@ class Cron extends CI_Controller {
         foreach ($dailyAlerts as $alert) {
             $this->alert_model->process($alert['alert_id']);
         }
-
     }
 }
