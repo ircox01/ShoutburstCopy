@@ -14,7 +14,7 @@ class Surveys_model extends CI_Model {
      * @param $comp_id
      */
     public function insert_rand_surveys($comp_id, $num) {
-        for ($i = 0; $i<$num; $i++){
+        for ($i = 0; $i<$num; $i++) {
             $this->insert_survey(-1,$comp_id,rand(1,121));
         }
     }
