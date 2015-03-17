@@ -4,19 +4,27 @@
  * @name:	render_chart
  */
 
+/**
+ *
+ * @property Reports_model $reports
+ */
+
 function render_chart($report, $from_dash=0)
 {
 	if (stripos($_SERVER['REQUEST_URI'],'wallboard/launch') !== FALSE) {
 		$in_wallboard = true;
 	} else {
 		$in_wallboard = false;
-		
 	}
 
 	$ci = &get_instance();
-	
+
+	//___
+	$report['report_query'] = str_replace('AND MONTHNAME(s.date_time) = MONTHNAME(DATE_SUB(NOW(), INTERVAL 1 MONTH))', '', $report['report_query']);
+	$report['report_query'] = str_replace("AND DATE_FORMAT(s.date_time,'%Y-%m') = DATE_FORMAT(NOW() - INTERVAL 1  MONTH,'%Y-%m')", '', $report['report_query']);
+
 	$result = $ci->reports->my_dashboard_report($report['report_id']);
-	
+
 	//if full_view then we don;t validate it for assign report
 	if ($ci->uri->segment(4) && ($ci->uri->segment(4) == 'full_view') && ($ci->access != COMP_AGENT) ){
 		$result	= array('Not Required To validate');
@@ -120,7 +128,7 @@ function render_chart($report, $from_dash=0)
 		$lineChartAgentName	=	"";
 	
 		$recordShownFrom = null;
-		$comp_logo=null;
+		$comp_logo = null;
 		if(!empty($dataArr))
 		{
 			//data set  for each user
@@ -231,6 +239,8 @@ function render_chart($report, $from_dash=0)
 							$logo = "";
 							$text .= " ".$row['transcriptions_text'];
 					}
+					//___
+					$text = substr($text, 0, 1024);
 					$text64 = base64_encode($text);
 					// NX: make generic (need to change when going live)
 					$query_detail = unserialize($report['query_detail']);
@@ -253,7 +263,7 @@ function render_chart($report, $from_dash=0)
 					} else {
 						$wciframe = "<iframe src='".base_url()."wordcloud_txt.php?text=$text64&logo=$logo&title=$wc_title' height=800 width=1450 frameBorder='0' style='overflow:hidden;'/>";
 					}
-			
+
 					if ($text != "") {
 						echo $wciframe;
 					} else {
@@ -267,7 +277,7 @@ function render_chart($report, $from_dash=0)
 						$target_url =  base_url().'reports/detail_report_view/'.$report['report_id'].'/d';
 					?>
 					<iframe overflow="hidden" width="100%" height="90%" style="border: 0px;" src="<?=$target_url?>"></iframe>
-					
+
 					<?php
 					
 					} else {
