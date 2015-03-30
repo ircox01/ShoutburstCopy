@@ -20,6 +20,8 @@
 		</tr>
 	</thead>
 	<tbody>
+	<?php
+	?>
 	<?php foreach ($reports as $key){ ?>
 		<tr>
 			<td><?php echo $key->report_name;?></td>

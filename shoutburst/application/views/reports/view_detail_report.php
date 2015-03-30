@@ -50,8 +50,8 @@ if (!$is_dash) {
 				<div class="col-sm-12">
 					<div id="report_content">
 						<div class='queryBuilderHtml'>
-							<?php 
-								detailReportDraw($query, $report_type,$background_color,$report_period,$start_date,$end_date,$report_name,$selectedColoumnHeading,$requestedFromList,$is_dash);
+							<?php
+							detailReportDraw($query, $report_type,$background_color,$report_period,$start_date,$end_date,$report_name,$selectedColoumnHeading,$requestedFromList,$is_dash);
 							?>
 						</div>
 					</div><!-- #report_content -->

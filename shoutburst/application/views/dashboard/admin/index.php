@@ -8,7 +8,8 @@
 		<div class="row row-space">
 			<ul class="funcs">
 			<?php
-			if (isset($dashboard)){
+			if (isset($dashboard))
+			{
 				for ($d = 1; $d <= 4; $d++ )
 				{
 				?>

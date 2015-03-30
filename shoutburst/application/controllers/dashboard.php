@@ -1,11 +1,22 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * Class Dashboard
+ * @property CI_URI $uri
+ * @property CI_Router $router
+ * @property MY_Loader $load
+ * @property CI_DB_mysql_driver $db
+ * @property CI_Session $session
+ * @property Dashboards_model $dashboards
+ * @property Users_model $user_model
+ * @property Reports_model $reports
+ */
 class Dashboard extends CI_Controller {
 
 	public function __construct()
 	{
 		parent::__construct();
-		
+
 		$data['title'] = TITLE.' | Dashboard';
 		$this->load->model('Reports_model', 'reports');
 		$this->load->model('Dashboards_model', 'dashboards');
@@ -20,18 +31,14 @@ class Dashboard extends CI_Controller {
 		if( ! isset($this->session->userdata['user_id']) )
 			redirect('login');
 	}
-	
-	/*
-	 * @author:	Muhammad Sajid
-	 * @name:	index
-	 */
+
 	public function index()
 	{
 		$data = array();
-		
+
 		# Get my dashboard
 		$data['dashboard'] = $this->dashboards->my_dashboard($this->user_id, $this->comp_id);
-		
+
 		# set report_query variables for qdr_1,qdr_2,qdr_3,qdr_4
 		if (!empty($data['dashboard']))
 		{
@@ -79,7 +86,8 @@ class Dashboard extends CI_Controller {
 		}
 				
 		# redirect to respective Dashboard
-		switch ($this->access){
+		switch ($this->access)
+		{
 			case SUPER_ADMIN:
 				$this->load->template('dashboard/super-admin/index', $data);
 			break;
@@ -95,13 +103,14 @@ class Dashboard extends CI_Controller {
 			case COMP_AGENT:
 				$this->load->template('dashboard/agent/index', $data);
 			break;
+
+			case COMP_RETAIL:
+				$this->load->template('dashboard/retail/index', $data);
+			break;
 		}
+
 	}
-	
-	/*
-	 * @author:	Muhammad Sajid
-	 * @name:	arrange_dashboard
-	 */
+
 	public function arrange_dashboard()
 	{
 		$update = array();

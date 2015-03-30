@@ -7,11 +7,7 @@ class Reports_model extends CI_Model {
 		parent::__construct();
 		$this->load->helper('date');
 	}
-	
-	/*
-	 * @author:	Muhammad Sajid
-	 * @name:	get_report
-	 */
+
 	public function get_report($report_id)
 	{
 		$this->db->where('report_id', $report_id);
@@ -21,12 +17,6 @@ class Reports_model extends CI_Model {
 		return $result;
 	} 
 	
-	/*
-	 * @author:	Muhammad Sajid
-	 * @name:	get_reports
-	 * @desc:	return all reports w.r.t company 
-	 * 			desc order by created_on
-	 */
 	public function get_reports($comp_id = null)
 	{		
 		if ( ($comp_id != null) && $comp_id != 'null' )
@@ -61,8 +51,6 @@ class Reports_model extends CI_Model {
 	}
 	
 	/*
-	 * @author:	Muhammad Sajid
-	 * @name:	delete
 	 * @desc:	publish/unpublish report.
 	 * 			stop if more than 4 reports are going to be publish.
 	 *
@@ -128,21 +116,14 @@ class Reports_model extends CI_Model {
     		return true;
     	}
     }
-    
-    /*
-     * @name:	my_dashboard_report
-     */
+
     public function my_dashboard_report($report_id)
     {
     	$row = $this->db->query("SELECT * FROM dashboards 
     							WHERE comp_id = $this->comp_id AND user_id = $this->user_id AND (qdr_1 = $report_id || qdr_2 = $report_id || qdr_3 = $report_id || qdr_4 = $report_id)")->row_array();
     	return $row;
     }
-    
-    /*
-     * @author:	Muhammad Sajid
-     * @name:	dashboard_report
-     */
+
     public function dashboard_report($report_id)
     {
     	$dashboard_report = $this->db->query("select report_name, report_type, x_axis_label, y_axis_label, background_color, report_period, 
@@ -151,42 +132,26 @@ class Reports_model extends CI_Model {
     											where dashboard = 1 and report_id = {$report_id}")->row_array();
     	return $dashboard_report;
     }
-	
-	/*
-	 * @author:	Muhammad Sajid
-	 * @name:	get_report_types
-	 */
+
 	public function get_report_types()
 	{
 		$this->db->order_by("type_name", "asc");
 		$result = $this->db->get('report_types')->result();
 		return $result;
 	}
-	
-	/*
-	 * @author:	Muhammad Sajid
-	 * @name:	get_report_periods
-	 */
+
 	public function get_report_periods()
 	{
 		$result = $this->db->get('report_periods')->result();
 		return $result;
 	}
-	
-	/*
-	 * @author:	Muhammad Sajid
-	 * @name:	get_report_intervals
-	 */
+
 	public function get_report_intervals()
 	{
 		$result = $this->db->get('report_intervals')->result();
 		return $result;
 	}
-	
-	/*
-	 * @author:	Arshad
-	 * @Mathod:	get_chart_data
-	 */
+
 	public function get_chart_data($sql)
 	{
 		if($sql){			

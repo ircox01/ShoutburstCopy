@@ -24,6 +24,7 @@ define('SUPER_ADMIN', 1);
 define('COMP_ADMIN', 2);
 define('COMP_MANAGER', 3);
 define('COMP_AGENT', 4);
+define('COMP_RETAIL', 10);
 define('USER_PHOTO', 'photos/user_photo');
 define('WB_PHOTO', 'photos/wallboard_logo');
 

@@ -131,7 +131,6 @@ $("body").addClass(localStorage.getItem("mainNavState"));
 				echo '</div>';
 			break;
 
-			
 			case COMP_AGENT:
 				echo '<div class="nav">';
 				echo anchor("welcome", "<span class='icon icon-dashboard'></span>Dashboard", array('class'=>($segment=='dashboard'?'active':'')));

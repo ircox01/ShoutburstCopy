@@ -1,1 +1,0 @@
-Query error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sentiment_score,recording,transcriptions_text,SUM(s.total_score) AS totalSurveyS' at line 1

@@ -1,1 +1,0 @@
-Severity: Notice  --> Undefined index:  /var/www/shoutburst/application/controllers/reports.php 201Query error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CONCAT(DATE_FORMAT(DATE_ADD(s.date_time, INTERVAL(1-DAYOFWEEK(s.date_time)) DAY)' at line 1

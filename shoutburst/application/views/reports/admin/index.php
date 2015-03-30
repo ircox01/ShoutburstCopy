@@ -31,28 +31,53 @@ Report</a> <a href="#" class="main-nav-toggle"></a><?php echo heading('&nbsp;&nb
 	</thead>
 	<tbody>
 	<?php 
-	
-	foreach ($reports as $key){ ?>
-		
+
+	//_ran_printr($reports);
+	//$sql_q = str_replace('AND MONTHNAME(s.date_time) = MONTHNAME(DATE_SUB(NOW(), INTERVAL 1 MONTH))', '', $reports[0]->report_query);
+	//$reports[5]->report_query = _ran_trimReportQueryDate($reports[5]->report_query);
+	//_ran_printr($reports[0]);
+	//_ran_printr($this->db->query($reports[0]->report_query)->result());
+
+	foreach ($reports as $key){
+
+		$db_res = $this->db->query($key->report_query)->result();
+		$show_details = (count($db_res) !== 0);
+
+		if ($show_details && isset($db_res[0]->recording)) $show_details = ($db_res[0]->recording !== 'Not Found');
+
+		?>
+
 		<tr><td style="display: none;"><?php echo  $key->report_id;?></td>
 			<td>
-			<?php
-			if($key->report_type=='data')
-			{
-				$urlLink = base_url().'reports/data_report_view/'.$key->report_id;
-				echo $key->report_name." <a href='$urlLink' target='_blank' id='open_i'></a>";				
-			}elseif($key->report_type=='detail')
-			 {
-				$urlLink = base_url().'reports/detail_report_view/'.$key->report_id;
-				echo $key->report_name." <a href='$urlLink' target='_blank' id='open_i'></a>";				
-			}else 
-			{
-			?>
-				<?php echo $key->report_name;?> 
-				<a href="#myModal" id='modal1' class="modal-iframe" role="button" data-toggle="modal" data-src="<?php echo base_url().'reports/view_report/'.$key->report_id.'/full_view'?>" data-height=600 data-width=100% >
-				<b id='open_i'></b>
-				</a>
-			<?php }?>
+
+			<?php echo $key->report_name; ?>
+
+				<?php
+
+				if ($show_details)
+				{
+					if ($key->report_type == 'data')
+					{
+						$urlLink = base_url().'reports/data_report_view/'.$key->report_id;
+						echo "<a href='".$urlLink."' target='_blank' id='open_i'></a>";
+					}
+					elseif ($key->report_type == 'detail')
+					{
+						$urlLink = base_url().'reports/detail_report_view/'.$key->report_id;
+						echo "<a href='".$urlLink."' target='_blank' id='open_i'></a>";
+					}
+					else
+					{
+					?>
+						<a href="#myModal" id='modal1' class="modal-iframe" role="button" data-toggle="modal"
+						   data-src="<?php echo base_url().'reports/view_report/'.$key->report_id.'/full_view'?>"
+						   data-height=600 data-width=100% >
+							<b id='open_i'></b>
+						</a>
+					<?php
+					}
+				}?>
+
 			</td>
 			<td><?php echo $key->full_name;?></td>
 			<td><?php echo ($key->createdon);?></td>

@@ -1,1 +1,0 @@
-Severity: Notice  --> Undefined index: selectedColoumnHeading /var/www/shoutburst/application/controllers/reports.php 1353Severity: Notice  --> Undefined index: selectedColoumnHeading /var/www/shoutburst/application/controllers/reports.php 1353404 Page Not Found --> companies/spinnerDefault.png404 Page Not Found --> companies/spinnerDefault.png

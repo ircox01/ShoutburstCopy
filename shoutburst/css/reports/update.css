@@ -1,0 +1,31 @@
+#ajaxBusy
+{
+    display : none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .1);
+    -webkit-transition: all .5s ease;
+    z-index: 1000;
+}
+
+#spinner
+{
+    position: fixed;
+    width: 328px;
+    height: 150px;
+    top: 40%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -101px;
+    text-align:center;
+    -webkit-transition: all 1000s linear;
+}
+
+#reportNameErr
+{
+    display: none;
+    color: red;
+}

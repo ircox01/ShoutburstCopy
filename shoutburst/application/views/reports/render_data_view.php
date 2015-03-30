@@ -612,7 +612,6 @@ if (strtolower($report_interval) == 'live') {
     </script>
 <?php
 
-
 }
 
 //remove set interval method global in this file b/c it will call on each time of back button hit
@@ -624,7 +623,6 @@ if (strtolower($report_interval) == 'live') {
             clearInterval(countdown);
         }
     }
-
 
     var base_url_of_website = '<?php echo base_url(); ?>';
 

@@ -5,9 +5,10 @@
 <!--  
 
 	Full graphs from dashboard and reports page 
-	
--->
 
+
+
+-->
 <style>
 #graph img {
 display:none;
@@ -19,7 +20,8 @@ visibility:hidden
 	<div class="container">	
 		<div id="report_content" class="cf">
 			<div class='queryBuilderHtml'>
-			<?php render_chart($report);?>
+			<?php
+			render_chart($report);?>
 			</div>
 		</div><!-- #report_content -->
 	</div>

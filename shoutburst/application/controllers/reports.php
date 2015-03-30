@@ -1,10 +1,69 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-/*
- * @author:	Muhammad Sajid
- * @desc:	This is only allowed for company admin and company manager
+/**
+ * @property CI_URI $uri
+ * @property Tags_model $tags
+ * @property Users_model $users
+ * @property Reports_model $reports
+ * @property MY_Loader $load
+ * @property CI_Session $session
+ * @property SB_ScriptManagerCSS manager_css
+ * @property SB_ScriptManagerJS manager_js
+ * @property LoaderExt loaderext
  */
-class Reports extends CI_Controller {
+class Reports extends CI_Controller
+{
+	private $dbMappingColumn = array(
+		'agent_pin'			=> 'user_pin',
+		'agent_name'		=> 'full_name',
+		'dialed_number'		=> 'dialed_number',
+		'cli'				=> 'cli',
+		'campaign'			=> 'camp_name',
+		'source'			=> 'source',
+		'q1_score'			=> 'q1',
+		'q2_score'			=> 'q2',
+		'q3_score'			=> 'q3',
+		'q4_score'			=> 'q4',
+		'q5_score'			=> 'q5',
+		'total_score'		=> 'total_score',
+		'jalla'				=> 'jalla',
+		'average_score'		=> 'average_score',
+		'recording'			=> 'recording',
+		'transcription'		=> 'transcriptions_text',
+		'sentiment'			=> 'sentiment_score',
+		'notes'				=> 'comments',
+		'tag'				=> 'tag_name',
+		'total_surveys'		=> 'total_surveys'
+	);
+
+	private $dataControlColumn = array(
+		'Agent PIN',
+		'Agent Name',
+		'Dialed Number',
+		'CLI',
+		'Source',
+		'Campaign',
+		'Q1 Score',
+		'Q2 Score',
+		'Q3 Score',
+		'Q4 Score',
+		'Q5 Score',
+		'Total Score',
+		'Total Surveys',
+		'Average Score',
+		'NPS',
+		'Recording',
+		'Transcription',
+		'Sentiment',
+		'Notes',
+		'Tag'
+	);
+
+	private $dataControl = array(
+		'reference'		=> array(
+			'Agent PIN', 'Agent Name', 'Dialed Number', 'CLI', 'Campaign', 'Source'
+		),
+	);
 
 	public function __construct()
 	{
@@ -15,15 +74,22 @@ class Reports extends CI_Controller {
 		$this->load->model('Users_model', 'users');
 		$this->load->model('tags_model', 'tags');
 
+		$this->load->library('LoaderExt');
+		$this->load->helper(array(
+			'SB_Core',
+			'SB_Priority',
+			'SB_Script'
+		));
+
 		# get session variable
 		$this->user_id = $this->session->userdata['user_id'];
 		$this->comp_id = $this->session->userdata['comp_id'];
-		$this->access = $this->session->userdata['access'];
+		$this->access  = $this->session->userdata['access'];
 		
 		# group Data Control for color
-		$this->general = array('Agent PIN','Agent Name','Dialed Number','CLI','Campaign');
-		$this->score = array('Q1 Score','Q2 Score','Q3 Score','Q4 Score','Q5 Score','Total Score','Average Score','Total Surveys', 'NPS Score');
-		$this->detail = array('Recording','Transcription','Sentiment','Notes','Tag');
+		$this->general 	= array('Agent PIN','Agent Name','Dialed Number','CLI','Campaign', 'Source');
+		$this->score   	= array('Q1 Score','Q2 Score','Q3 Score','Q4 Score','Q5 Score','Total Score','Average Score','Total Surveys', 'NPS Score');
+		$this->detail 	= array('Recording','Transcription','Sentiment','Notes','Tag');
 		
 		$this->load->vars($data);
 		
@@ -31,14 +97,11 @@ class Reports extends CI_Controller {
 			redirect('login');
 		}
 	}	
-	
-	/*
-	 * @author:	Muhammad Sajid
-	 * @name:	index
-	 */
+
 	public function index()
 	{		
-		switch ($this->access){
+		switch ($this->access)
+		{
 			case COMP_ADMIN:
 				$this->admin();
 			break;
@@ -52,24 +115,14 @@ class Reports extends CI_Controller {
 			break;			
 		}		
 	}
-	
-	/*
-	 * @author:	Muhammad Sajid
-	 * @name:	admin
-	 */
+
 	public function admin()
 	{
 		# Get all Reports
 		$data['reports'] = $this->reports->get_reports($this->comp_id);
 		$this->load->template('reports/admin/index', $data);
 	}
-	
-	/*
-	 * @author:	Muhammad Sajid
-	 * @name:	status
-	 * @desc:	allow admin/manager to publish
-	 * 			report for dashboard/wallboard
-	 */
+
 	public function status()
 	{
 		$report_id = $this->uri->segment(3);
@@ -94,10 +147,6 @@ class Reports extends CI_Controller {
 		}
 	}
 	
-	/*
-	 * @author:	Muhammad Sajid
-	 * @name:	add_report
-	 */
 	public function add_report()
 	{
 		if ($this->access != COMP_AGENT){
@@ -149,24 +198,24 @@ class Reports extends CI_Controller {
 		$logo = $post['logo'];
 
 		//report type
-		$report_type	=	$post['report_type'];
+		$report_type = $post['report_type'];
 		
 		//chart type
-		$chartType	=	array('bar chart','line graph','pie chart');
+		$chartType = array('bar chart','line graph','pie chart');
 		
 		//for Report Data Heading
-		$selectedColoumnHeading	=	$post['reports_fields'];
+		$selectedColoumnHeading	= $post['reports_fields'];
 		# mapping array for DB tables and Data Control 
 		$cols = $this->dbMappingColumn();
 		
-		$selectedColoumnHeading	=	$post['reports_fields'];
+		$selectedColoumnHeading	= $post['reports_fields'];
 		$report_fields	=	array();
 		$fields	=	array();
 		
 		//Total Survey Variable
 		$totalSurvey	=	false;
-		$select='';
-		$comma	=	"";
+		$select = '';
+		$comma = "";
 		
 		# create report column array
 		if(!empty($post['reports_fields']))
@@ -181,15 +230,19 @@ class Reports extends CI_Controller {
 					$totalSurvey	=	true;
 					continue;
 				}
-				if ($k == 'maximum_scores') {
+				if ($k == 'maximum_scores')
+				{
 					$maximumScores = true;
 					$cols[$k] = '{{maximum_scores}} as maximum_scores';
-
 				}
-				if ($k == 'incompletes') {
+				if ($k == 'incompletes')
+				{
 					$incompletes = true;
 					$cols[$k] = '{{incompletes}} as incompletes';
-
+				}
+				if ($k == 'source')
+				{
+					$cols[$k] = '`source`';
 				}
 				if($k == "tag")
 				{
@@ -202,16 +255,16 @@ class Reports extends CI_Controller {
 				if(  $k== "total_score"    && $report_type == "data"){
 					$cols[$k]= "avg(".$k.") as ". $k . " ";
 				}
-				else if( ( $k== "q1_score" || $k== "q2_score" || $k== "q3_score" || $k== "q4_score" ||$k== "q5_score" ) && $report_type=="data")
+				else if( ( $k == "q1_score" || $k == "q2_score" || $k == "q3_score" || $k == "q4_score" ||$k == "q5_score" ) && $report_type == "data")
 				{
 					$k = substr($k, 0,2);
 					$cols[$k]= "avg(".$k.") as ". $k . " ";	
 				}
-				else if($k== "total_score" && $report_type == "detail"){
+				else if($k == "total_score" && $report_type == "detail")
+				{
 					#TODO
 					// Messed up grouping if using AVG (
 					$cols[$k]= "total_score as total_score";
-					
 				}
 				if ($cols[$k] != "") {
 					$fields[] = $cols[$k];
@@ -221,8 +274,7 @@ class Reports extends CI_Controller {
 			# build fields list for query string
 			$select = implode(",", $fields);
 			$comma	=",";
-		}	
-		
+		}
 
 		//check data type is chart or not
 		if(in_array($report_type,$chartType))
@@ -292,7 +344,7 @@ class Reports extends CI_Controller {
 		if($report_type!='data' && $report_type!='detail')
 			$where =  $where .' AND   ' .$post['y_axis_label'] . ' IS NOT NULL ';
 		$where .= $whereFilter;
-	
+
 		//check data type is chart or not
 		if(in_array($report_type,$chartType))
 		{ 
@@ -370,7 +422,7 @@ class Reports extends CI_Controller {
                     $where .=  "AND DATE_FORMAT($dateTime,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m')";
                     break;
                 case "last month":
-                    $where .=  "AND DATE_FORMAT($dateTime,'%Y-%m') = DATE_FORMAT(NOW() - INTERVAL 1  MONTH,'%Y-%m')";
+                    $where .=  "AND $dateTime > (NOW() - INTERVAL 1 MONTH)";
                     break;
                 case "custom":
                     //format start and end time for sql query
@@ -386,7 +438,8 @@ class Reports extends CI_Controller {
 
 		$query = 'SELECT '. $select .' '. $from .' '. $join .' '. $where;
 
-		if (@$maximumScores or @$incompletes) {
+		if (@$maximumScores or @$incompletes)
+		{
 			$query = str_replace('{{maximum_scores}}',"(select count(*) from surveys s $join $where and (s.max_q1 + s.max_q2 + s.max_q3 + s.max_q4 + s.max_q5 = s.total_score))", $query);
 			$query = str_replace('{{incompletes}}',"(select count(*) from surveys s $join $where and (IF(s.q1 = 0 or s.q1 = NULL,1,0) + IF(s.q1 = 0 or s.q1 = NULL,1,0) + IF(s.q2 = 0 or s.q2 = NULL,1,0) + IF(s.q3 = 0 or s.q3 = NULL,1,0) + IF(s.q4 = 0 or s.q4 = NULL,1,0) < 3 ))", $query);
 			$query = $query." LIMIT 1";
@@ -398,7 +451,7 @@ class Reports extends CI_Controller {
 				 LEFT JOIN user_companies uc ON uc.user_id = u.user_id
 				 LEFT JOIN campaigns c ON c.camp_id = s.camp_id
 				 LEFT JOIN companies cc ON cc.comp_id=uc.comp_id
-				   WHERE acc_id = 4 AND  uc.comp_id = 30 AND (q1 > ('2'))   AND MONTHNAME(s.date_time) = MONTHNAME(DATE_SUB(NOW(), INTERVAL 1 MONTH))GROUP BY camp_name ORDER BY camp_name";
+				   WHERE acc_id = 4 AND  uc.comp_id = 30 AND (q1 > ('2')) AND MONTHNAME(s.date_time) = MONTHNAME(DATE_SUB(NOW(), INTERVAL 1 MONTH))GROUP BY camp_name ORDER BY camp_name";
 	    */
 	    #WHERE acc_id = 4 AND MONTHNAME(s.date_time) = MONTHNAME(NOW())GROUP BY reportDate,  s.user_id  ORDER BY reportDate
 		# WHERE acc_id = 4 AND DATE_FORMAT(s.date_time,'%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m') ORDER BY s.date_time DESC,agentName
@@ -413,7 +466,7 @@ class Reports extends CI_Controller {
 		
 		# update report data
 		if( isset($post['saveReport']) && $post['saveReport'] == 'updateReportData' )
-		{		
+		{
 			$this->reports->updateReportData( $post , $query );
 			echo "<div></div>";
 			$this->session->set_flashdata('reportSuccessMessage', 'Report Updated Successfully!');
@@ -421,7 +474,6 @@ class Reports extends CI_Controller {
 		}
 		# TODO: If report column field contains tag_name then while generating reports get campaign id and execute
 		#		select * from tags where camp_ids LIKE '%"20"%' to get Tag name		
-
 
 		/**
 		 * Show Chart
@@ -664,7 +716,7 @@ public function wcDraw($query) {
 	 * **/
 	function getChartColumn($post){
 		
-		$chartColoumn		=	array();
+		$chartColoumn = array();
 		
 		if(!empty($post)){
 			$report_type		=	$post['report_type'];
@@ -775,11 +827,14 @@ public function wcDraw($query) {
 			 * get Shown Record Range For Show in CHart Detail View  
 			 * */
 			
-			if(in_array('campaign', $report_fields)){
-				$chartColoumn[]	= 'GROUP_CONCAT(camp_name) AS AgentFullName';
-				$chartColoumn[]	= 'full_name';
+			if(in_array('campaign', $report_fields))
+			{
+				$chartColoumn[] = 'GROUP_CONCAT(camp_name) AS AgentFullName';
+				$chartColoumn[] = 'full_name';
 				$chartColoumn[] = $y_axis_label;
-			}else{
+			}
+			else
+			{
 				$chartColoumn[]	= 'GROUP_CONCAT(full_name) AS AgentFullName';
 				$chartColoumn[]	= 'full_name';
 				$chartColoumn[] = $y_axis_label;			
@@ -807,7 +862,7 @@ public function wcDraw($query) {
 	
 	function chartWhereCondition($post){
 		
-		$whereCondition	=	false;
+		$whereCondition	= false;
 		
 		if(!empty($post))
 		{
@@ -870,27 +925,27 @@ public function wcDraw($query) {
 			 * for multi user currently set for only line which is use after bar & pie as well
 			 * */
 			//if($post['report_type']!='line graph'){
-			if(in_array('campaign',$fields)){
+			if(in_array('campaign',$fields) || in_array('campaign',$fields))
+			{
 				switch ($report_interval) {
-				    case "live":
-				        $whereCondition .=  "GROUP BY camp_name ORDER BY reportDate";
-				        break;
-				    case "minutes":
-				         $whereCondition .=  "GROUP BY camp_name ORDER BY reportDate";
-				        break;
-				    case "hours":
-				        $whereCondition .=  "GROUP BY camp_name ORDER BY reportDate";
-				        break;
-				    case "days":
-				        $whereCondition .=  "GROUP BY camp_name ORDER BY $dateTime";
-				        break;
-				    case "weeks":
-				        $whereCondition .=  "GROUP BY camp_name ORDER BY WEEK($dateTime)";
-				        break;
-				    case "months":
-				        $whereCondition .=  "GROUP BY camp_name ORDER BY $dateTime";
-				        break;
-				     
+					case "live":
+						$whereCondition .= "GROUP BY camp_name ORDER BY reportDate";
+						break;
+					case "minutes":
+						$whereCondition .= "GROUP BY camp_name ORDER BY reportDate";
+						break;
+					case "hours":
+						$whereCondition .= "GROUP BY camp_name ORDER BY reportDate";
+						break;
+					case "days":
+						$whereCondition .= "GROUP BY camp_name ORDER BY $dateTime";
+						break;
+					case "weeks":
+						$whereCondition .= "GROUP BY camp_name ORDER BY WEEK($dateTime)";
+						break;
+					case "months":
+						$whereCondition .= "GROUP BY camp_name ORDER BY $dateTime";
+						break;
 				}
 			}
 			else if($post['report_type']=='bar chart'){
@@ -1448,11 +1503,7 @@ public function wcDraw($query) {
 		
 		return $agentFormatedData;
 	}
-	
-	/**
-	 * Y-Axis Chart COloumn NAme List
-	 * */
-	
+
 	function yAxisColoumnList(){
 		# mapping array for DB tables and Data Control 
 		$cols = array(
@@ -1468,11 +1519,7 @@ public function wcDraw($query) {
 					
 		return $cols;
 	}
-	
-	/*
-	 * @author:	Muhammad Sajid
-	 * @name:	view_report
-	 */
+
 	public function view_report()
 	{
 		if ($this->uri->segment(4) && ($this->uri->segment(4) == 'full_view') && ($this->access != COMP_AGENT) )
@@ -1506,121 +1553,148 @@ public function wcDraw($query) {
 			}
 		}
 	}
-	
-	/*
-	 * @author:	Muhammad Sajid
-	 * @name:	access_denied
-	 */
+
 	public function access_denied(){
 		$this->load->template('reports/access_denied');
 	}
 	
-	/*
-	 * @author:	Muhammad Sajid
-	 * @name:	not_found
-	 */
 	public function not_found(){
 		$this->load->template('reports/not_found');
 	}
-	
-	/**
-	 * @author Arshad
-	 * @name Update Report 
-	 * */
-	
+
+
 	function updateReport()
 	{
-		if ($this->access != COMP_AGENT)
+		if ($this->access == COMP_AGENT)
 		{
-			$reportId = $this->uri->segment(3);
-			//if url has report id then we process request 
-			if($reportId && is_numeric($reportId)){
-				# Get all Tags
-				$data['tags'] = $this->tags->get_tags($this->comp_id);
-			
-				#set report id
-				$data['reportId']				= $reportId;
-				
-				# Get all Report Types
-				$data['report_types'] 			= $this->reports->get_report_types();
-				$data['report_periods'] 		= $this->reports->get_report_periods();
-				$data['report_intervals'] 		= $this->reports->get_report_intervals();
-				$data['yAxisColoumnList'] 		= $this->yAxisColoumnList();
-				
-				#Data Control Column
-				$dataControlColumn			= $this->dataControlColumn();
-				
-				$users = $this->users->getUsers($this->comp_id);
-
-				$allnames = array();
-				$allpins = array();
-
-				foreach ($users as $user) {
-					$allnames[] = $user->full_name;
-					if ($user->user_pin != "0") {
-						$allpins[] = $user->user_pin;
-					}
-				}
-
-				$data['allnames']	= $allnames;
-				$data['allpins']	= $allpins;
-				
-				//get report data
-				$reportData	=	$this->reports->get_report($reportId);
-				$data['reportData'] 		= $reportData;
-				
-				if(isset($data['reportData']['custom_start_date']) && $data['reportData']['custom_start_date']!= "0000-00-00 00:00:00")
-					$data['reportData']['custom_start_date']=date('Y-m-d H:i',strtotime($data['reportData']['custom_start_date']));
-				else $data['reportData']['custom_start_date']='';
-				if(isset($data['reportData']['custom_end_date'])  && $data['reportData']['custom_end_date']!= "0000-00-00 00:00:00")
-					$data['reportData']['custom_end_date']=date('Y-m-d H:i',strtotime($data['reportData']['custom_end_date']));
-				else $data['reportData']['custom_end_date']='';
-				if(isset($data['reportData']['report_period_date'])  && $data['reportData']['report_period_date']!= "0000-00-00 00:00:00")
-					$data['reportData']['report_period_date']=date('Y-m-d H:i',strtotime($data['reportData']['report_period_date']));
-				else $data['reportData']['report_period_date']='';
-				
-				if(!empty($reportData))
-				{
-					
-					#select data control array 
-					$selectedCols = $reportData['columns_name'];
-					# create report column array
-					$selectedDataControl = explode(",", str_replace("_", " ", ucwords(trim($selectedCols))));
-					
-					//remaining data control array
-					$dataControlColumn			=	array_diff($dataControlColumn,$selectedDataControl);
-					
-					
-					/**
-					 * Unserialize Condition,Detail,Filter Array for conidtion create section 
-					 * */
-					
-					$data['query_condition']	=	unserialize($reportData['query_condition']);
-					$data['query_data_type']	=	unserialize($reportData['query_data_type']);
-					$data['query_filter']		=	unserialize($reportData['query_filter']);
-					$data['query_detail']		=	unserialize($reportData['query_detail']);
-					
-					$data['dataControlColumn']		=	$dataControlColumn;
-					$data['selectedDataControl']	=	$selectedDataControl;
-					$data['reportUpdate']			=   true;
-					$data['general']				=	$this->general;
-					$data['score']					=	$this->score;
-					$data['detail']					=	$this->detail;
-					
-					$this->load->template('reports/admin/edit', $data);
-				}else{
-					echo '<div id="message" class="error">No Record Found</div>';
-				}
-			}
-		} else {
 			redirect('reports');
+		}
+
+		$this->loaderext->singlton(LoaderExt::LIBRARY, array(
+			'class' 		=> 'SB_ScriptManagerJS',
+			'object_name'	=> 'manager_js'
+		));
+
+		$this->loaderext->singlton(LoaderExt::LIBRARY, array(
+			'class' 		=> 'SB_ScriptManagerCSS',
+			'object_name'	=> 'manager_css'
+		));
+
+		$reportId = $this->uri->segment(3);
+
+		if (!$reportId || !is_numeric($reportId))
+		{
+			echo '<div id="message" class="error">No Record Found</div>';
+			return;
+		}
+
+		# Get all Tags
+		$data['tags'] = $this->tags->get_tags($this->comp_id);
+
+		$data['reportId']				= $reportId;
+
+		# Get all Report Types
+		$data['report_types'] 			= $this->reports->get_report_types();
+		$data['report_periods'] 		= $this->reports->get_report_periods();
+		$data['report_intervals'] 		= $this->reports->get_report_intervals();
+		$data['yAxisColoumnList'] 		= $this->yAxisColoumnList();
+
+		#Data Control Column
+		$dataControlColumn			= $this->dataControlColumn();
+
+		$users = $this->users->getUsers($this->comp_id);
+
+		$allnames = array();
+		$allpins = array();
+
+		foreach ($users as $user)
+		{
+			$allnames[] = $user->full_name;
+
+			if ($user->user_pin != "0")
+			{
+				$allpins[] = $user->user_pin;
+			}
+		}
+
+		$data['allnames']	= $allnames;
+		$data['allpins']	= $allpins;
+
+		//get report data
+		$reportData	=	$this->reports->get_report($reportId);
+		$data['reportData'] = $reportData;
+
+		if ( isset($data['reportData']['custom_start_date']) && $data['reportData']['custom_start_date'] != "0000-00-00 00:00:00" )
+		{
+			$data['reportData']['custom_start_date'] = date('Y-m-d H:i', strtotime($data['reportData']['custom_start_date']));
+		}
+		else
+		{
+			$data['reportData']['custom_start_date'] = '';
+		}
+
+		if ( isset($data['reportData']['custom_end_date']) && $data['reportData']['custom_end_date'] != "0000-00-00 00:00:00" )
+		{
+			$data['reportData']['custom_end_date'] = date('Y-m-d H:i', strtotime($data['reportData']['custom_end_date']));
+		}
+		else
+		{
+			$data['reportData']['custom_end_date'] = '';
+		}
+
+		if ( isset($data['reportData']['report_period_date']) && $data['reportData']['report_period_date'] != "0000-00-00 00:00:00" )
+		{
+			$data['reportData']['report_period_date'] = date('Y-m-d H:i', strtotime($data['reportData']['report_period_date']));
+		}
+		else
+		{
+			$data['reportData']['report_period_date'] = '';
+		}
+
+		if ( !empty($reportData) )
+		{
+			#select data control array
+			$selectedCols = $reportData['columns_name'];
+			# create report column array
+			$selectedDataControl = explode(",", str_replace("_", " ", ucwords(trim($selectedCols))));
+
+			//remaining data control array
+			$dataControlColumn	= array_diff($dataControlColumn,$selectedDataControl);
+
+			// Unserialize Condition,Detail,Filter Array for conidtion create section
+
+			$data['query_condition']		=	unserialize($reportData['query_condition']);
+			$data['query_data_type']		=	unserialize($reportData['query_data_type']);
+
+			$data['query_filter']			=	unserialize($reportData['query_filter']);
+			$data['query_detail']			=	unserialize($reportData['query_detail']);
+
+			$data['dataControlColumn']		=	$dataControlColumn;
+			$data['selectedDataControl']	=	$selectedDataControl;
+			$data['reportUpdate']			=   true;
+			$data['general']				=	$this->general;
+			$data['score']					=	$this->score;
+			$data['detail']					=	$this->detail;
+
+			$this->manager_js
+				->add('jquery-ui', 'jquery-ui.min.js')
+				->add('spectrum', 'spectrum.js')
+				->add('jscharts', 'jscharts.js');
+
+			$reportData['base_url'] = base_url();
+
+			$this->manager_js
+				->add('test', 'reports/test.js')
+				->localize('test', 'SOURCE', $reportData)
+				->localize('test', 'temp_data', $data);
+
+			$this->manager_css
+				->add('spectrum', 'spectrum.css');
+
+			$this->load->template('reports/admin/edit', $data);
 		}
 	}
 
-	/*
-	 * @name:	delete
-	 * @author:	Muhammad Sajid
-	 */
 	public function delete()
 	{
 		$report_id = $this->uri->segment(3);
@@ -1654,75 +1728,17 @@ public function wcDraw($query) {
 		} else {
 			$this->session->set_flashdata('message', '<div id="message" class="error">Error occur while deleting report</div>');
 		}
-		//redirect('reports');
 	}
-	
-	/**
-	 * @author Arshad
-	 * @name get coloumn name for data control
-	 * */
-	
-	function dataControlColumn(){
-		
-		$cols = array(
-						'Agent PIN',
-						'Agent Name',
-						'Dialed Number',
-						'CLI',
-						'Campaign',
-						'Q1 Score',
-						'Q2 Score',
-						'Q3 Score',
-						'Q4 Score',
-						'Q5 Score',
-						'Total Score',
-						'Total Surveys',
-						'Average Score',
-						'Recording',
-						'Transcription',
-						'Sentiment',
-						'Notes',
-						'Tag',
-					);
-					
-		return $cols;
+
+	function dataControlColumn()
+	{
+		return $this->dataControlColumn;
 	}
-	
-	/**
-	 * @author Arshad
-	 * @name DB Mapping Column
-	 * */
-	
+
 	function dbMappingColumn(){
-		
-		return array(
-						'agent_pin'			=> 'user_pin',
-						'agent_name'		=> 'full_name',
-						'dialed_number'		=> 'dialed_number',
-						'cli'				=> 'cli',
-						'campaign'			=> 'camp_name',
-						'q1_score'			=> 'q1',
-						'q2_score'			=> 'q2',
-						'q3_score'			=> 'q3',
-						'q4_score'			=> 'q4',
-						'q5_score'			=> 'q5',
-						'total_score'		=> 'total_score',
-						'jalla'				=> 'jalla',
-						'average_score'		=> 'average_score',
-						'recording'			=> 'recording',
-						'transcription'		=> 'transcriptions_text',
-						'sentiment'			=> 'sentiment_score',
-						'notes'				=> 'comments',
-						'tag'				=> 'tag_name',
-						'total_surveys'		=> 'total_surveys'
-					);
+		return $this->dbMappingColumn;
 	}
-	
-	/**
-	 * @author Arshad
-	 * @Name Copy Report
-	 * */
-	
+
 	function copyReport(){
 		$report_id = $this->uri->segment(3);
 		//if url has report id then we process request 

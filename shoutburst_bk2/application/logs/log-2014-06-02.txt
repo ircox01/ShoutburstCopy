@@ -1,1 +1,0 @@
-Severity: Notice  --> Undefined index: plan /var/www/shoutburst/application/controllers/services.php 107

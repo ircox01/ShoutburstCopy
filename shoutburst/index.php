@@ -1,5 +1,25 @@
 <?php
 
+function _ran_printr($value)
+{
+	echo '<pre>';
+	print_r($value);
+	echo '</pre>';
+}
+
+function _ran_var_dump($value)
+{
+	echo '<pre>';
+	var_dump($value);
+	echo '</pre>';
+}
+
+// return if not null key
+function _ran_rinnk($arr, $key, $default = null)
+{
+	return isset($arr[$key]) ? $arr[$key] : $default;
+}
+
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT

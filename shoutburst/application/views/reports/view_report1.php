@@ -8,13 +8,13 @@
 	
 -->
 
-
 <style>
-#graph img {
-display:hidden;
-visibility:hidden
+#graph img
+{
+    visibility : hidden
 }
 </style>
+
 <center><img src='<?php echo base_url()?>images/simple-loader.png' id='loader' /></center>
 <span style='text-align:center;'>
 <?php echo $this->session->flashdata('message');?>
@@ -41,7 +41,9 @@ if ($report['report_interval'] == "live") {
 	<div class="container">	
 		<div id="report_content" class="cf">
 			<div class='queryBuilderHtml'>
-			<?php render_chart($report,1);?>
+			<?php
+                render_chart($report,1);
+            ?>
 			</div>
 		</div><!-- #report_content -->
 	</div>

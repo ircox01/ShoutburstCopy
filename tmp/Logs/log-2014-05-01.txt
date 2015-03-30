@@ -1,1 +1,0 @@
-Query error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= '' AND  = '' AND total_score = '' AND acc_id = 4 AND GROUP BY reportDate ORDER' at line 5

@@ -1,15 +1,15 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class MY_Loader extends CI_Loader {
+/**
+ * Class MY_Loader
+ * @property SB_ScriptManagerCSS manager_css
+ * @property SB_ScriptManagerJS manager_js
+ */
+class MY_Loader extends CI_Loader
+{
+
     public function template($template_name, $vars = array(), $return = FALSE)
     {
-    	/*$e = explode('/', $template_name);
-    	if ($e[0] == 'ptelecom'){
-    		$content  = $this->view('templates/ptheader', $vars, $return);
-    	} else {
-    		$content  = $this->view('templates/header', $vars, $return);
-    	}*/
-        
     	$content  = $this->view('templates/header', $vars, $return);
         $content .= $this->view($template_name, $vars, $return);
         $content .= $this->view('templates/footer', $vars, $return);
@@ -19,4 +19,5 @@ class MY_Loader extends CI_Loader {
             return $content;
         }
     }
+
 }

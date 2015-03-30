@@ -9,6 +9,16 @@
  * @property Reports_model $reports
  */
 
+/*
+function _ran_correctQueryDate($query)
+{
+	$query = str_replace('AND MONTHNAME(s.date_time) = MONTHNAME(DATE_SUB(NOW(), INTERVAL 1 MONTH))',
+		'AND s.date_time > (NOW() - INTERVAL 1 MONTH)', $query);
+	$query = str_replace("AND DATE_FORMAT(s.date_time,'%Y-%m') = DATE_FORMAT(NOW() - INTERVAL 1  MONTH,'%Y-%m')",
+		'AND s.date_time > (NOW() - INTERVAL 1 MONTH)', $query);
+	return $query;
+}
+*/
 function render_chart($report, $from_dash=0)
 {
 	if (stripos($_SERVER['REQUEST_URI'],'wallboard/launch') !== FALSE) {
@@ -20,9 +30,6 @@ function render_chart($report, $from_dash=0)
 	$ci = &get_instance();
 
 	//___
-	$report['report_query'] = str_replace('AND MONTHNAME(s.date_time) = MONTHNAME(DATE_SUB(NOW(), INTERVAL 1 MONTH))', '', $report['report_query']);
-	$report['report_query'] = str_replace("AND DATE_FORMAT(s.date_time,'%Y-%m') = DATE_FORMAT(NOW() - INTERVAL 1  MONTH,'%Y-%m')", '', $report['report_query']);
-
 	$result = $ci->reports->my_dashboard_report($report['report_id']);
 
 	//if full_view then we don;t validate it for assign report
@@ -389,7 +396,7 @@ function render_chart($report, $from_dash=0)
 			$data['logo'] 				= $comp_logo;
 			
 			$data['fullView']			= $fullView;
-			
+
 			if ($ci->uri->segment(4)==="d") {
 				$ci->load->view('reports/render_chart1', $data);
 			}else

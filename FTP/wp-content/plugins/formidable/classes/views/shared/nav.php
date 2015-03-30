@@ -1,1 +1,0 @@
-<!-- Keep this file for a while to prevent issues with add-ons -->

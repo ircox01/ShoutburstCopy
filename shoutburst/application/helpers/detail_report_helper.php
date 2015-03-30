@@ -8,7 +8,7 @@
 	 * 
 	 * */
 	function getDetailColumn($post,$select){
-		
+
 		$chartColoumn		=	array();
 		
 		if(!empty($post))
@@ -152,8 +152,7 @@
 	 * */
 	
 	function detailReportDraw($query, $report_type,$background_color,$report_period,$start_date,$end_date,$report_name,$selectedColoumnHeading, $requestedFromList=null, $is_dash = false)
-	{	
-
+	{
 		if($query)
 		{
 				$ci = &get_instance();
