@@ -1,5 +1,5 @@
 <?php
-
+die(getcwd());
 require_once("./config.php");
 require_once("./admin/_inc/backgroundprocess.class.php");
 require_once("./admin/_inc/functions.php");
@@ -11,11 +11,13 @@ $port = '443';
 
 ob_start();
 
-switch ($_REQUEST['action']) {
+switch ($_REQUEST['action'])
+{
     case 'new':
         $r = mysql_query("select id from tbl_logins where pin='".addslashes($_REQUEST['pin'])."'");
         $row = mysql_fetch_assoc($r);
-        if($row['id']){
+        if($row['id'])
+        {
             $_REQUEST['Timestamp'] = date("Y/m/d H:i:s");
             $query = sprintf("
                 insert into csv_data
@@ -30,7 +32,8 @@ switch ($_REQUEST['action']) {
             $r = mysql_query($query);
             $callid = mysql_insert_id();
         }
-        else {
+        else
+        {
             $callid = 0;
         }
         $output = "<container>\n<callid>$callid</callid>\n</container>\n";
