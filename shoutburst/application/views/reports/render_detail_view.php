@@ -338,18 +338,22 @@ echo $html;
 
 			$(function(){
 			var audio = document.getElementById('audio');
-			    $(".music_btn").on("click",function(){
-			        var data=$(this).attr("data-src");
-			        if(audio.paused){
+			    $(".music_btn").on("click",function()
+				{
+					var data=$(this).attr("data-src") + '.mp3';
+
+			        if (audio.paused)
+					{
 			        	//audio.currentTime = 0;
-			        	$("#audio > source").attr("src",data);
+			        	$("#audio > source").attr("src", data);
 			        	audio.load();
 			        	audio.play();
-			        	$(".music_btn").attr("src",base_url_of_website+"images/play.png");	
-			        	$(this).attr("src",base_url_of_website+"images/pause.png");
+			        	$(".music_btn").attr("src", base_url_of_website + "images/play.png");
+			        	$(this).attr("src", base_url_of_website + "images/pause.png");
 
 			        }
-			        else{
+			        else
+					{
 			        	if(data == $("#audio > source").attr("src"))
 			        	{
 			        		audio.pause();
@@ -370,7 +374,7 @@ echo $html;
 			        	
 			        	}
 			        }
-			        
+
 			    });
 				
 			});
