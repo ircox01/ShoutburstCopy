@@ -1,0 +1,1 @@
+{"surveys_total_count":10,"latest_question_score":8,"detractors_number":0,"neutrals_number":8,"promoters_number":2,"nps_score":20}

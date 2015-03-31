@@ -1,0 +1,3 @@
+Options Includes FollowSymLinks MultiViews
+DirectoryIndex index.html index.php
+

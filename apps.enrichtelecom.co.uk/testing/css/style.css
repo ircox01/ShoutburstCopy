@@ -1,0 +1,23 @@
+.table-striped > tbody > tr:nth-child(2n+1) > td {
+    background-color: #FCF6ED;
+}
+.table-striped > tbody > tr:nth-child(2n) > td {
+    background-color: #E3FCE9;
+}
+#calls_information_table.table-striped > tbody > tr  td:nth-child(2) {
+    text-align:center;
+    width:90px;
+    padding-right: 15px;
+}
+.table-striped > tbody > tr  td:nth-child(1) {
+    text-align:left;
+}
+#calls_information_table {
+    margin: 24px 0 0 39px;
+}
+#calls_information_table  td {
+    padding: 7px 8px 8px 12px;
+}
+.table-striped > tbody > tr td:nth-child(1) {
+    margin: 0 0 0 6px;
+}
