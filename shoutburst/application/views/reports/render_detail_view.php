@@ -331,16 +331,14 @@ echo $html;
 	
 </script>
 
-
 		<script>
 
-
-
-			$(function(){
-			var audio = document.getElementById('audio');
+			$(function()
+			{
+				var audio = document.getElementById('audio');
 			    $(".music_btn").on("click",function()
 				{
-					var data=$(this).attr("data-src") + '.mp3';
+					var data=$(this).attr("data-src");
 
 			        if (audio.paused)
 					{
