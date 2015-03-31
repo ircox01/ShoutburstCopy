@@ -3,9 +3,11 @@
  * class Surveys
  * @property Surveys_model $surveys_model
  */
-class Surveys extends CI_Controller {
+class Surveys extends CI_Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         error_reporting(0);
         parent::__construct();
         $this->load->model('surveys_model');
@@ -23,10 +25,5 @@ class Surveys extends CI_Controller {
             $this->surveys_model->insertRandomSurvey($rand_user->comp_id, $rand_user->user_id, $rand_camp->camp_id);
         }
     }
-
-    /*public function addRandom($num) {
-        echo "ADDING  $num random surveys \n\r";
-        $this->surveys_model->insert_rand_surveys(2, $num);
-    }*/
 
 }

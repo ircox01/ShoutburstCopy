@@ -12,10 +12,6 @@ class Services extends CI_Controller {
 			
 	}
 	
-	/*
-	 * @author:	Muhammad Sajid
-	 * @name:	index
-	 */
 	public function index()
 	{
 		#09/04/2014 11:16:24
