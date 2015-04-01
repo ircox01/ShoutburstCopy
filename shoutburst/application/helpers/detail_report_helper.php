@@ -157,10 +157,7 @@
 		{
 				$ci = &get_instance();
 				$dataArr = $ci->reports->get_chart_data($query);
-				
-				
-				
-				//print_r($dataArr);
+
 				foreach ($dataArr as $key => $val)
 				{
 			       if (isset($val['logo']))
@@ -170,15 +167,26 @@
 			       }
 			    }
 
-
 				$len = count($dataArr);
 
-				for ($i=0;$i < $len;$i++) {
-					if (isset($dataArr[$i]['recording']) && strlen($dataArr[$i]['recording']) > 4) {
-						$urlLink 	= base_url().'recordings/'.$dataArr[$i]['recording'];
-						$dataArr[$i]['recording'] = "<img  class='music_btn' src='".base_url()."images/play.png' data-src='".$urlLink."' />";	
-									
-						//<a href="http://144.76.168.74/shoutburst/jwplay.php?rec_id='.$dataArr[$i]['recording'].'" target="_blank">Play</a>';
+				for ($i=0;$i < $len;$i++)
+				{
+					if (!empty($dataArr[$i]['recording']))
+					{
+						if ( strtoupper($dataArr[$i]['recording']) !== 'NOT FOUND' && file_exists(RECORDPATH . $dataArr[$i]['recording']) )
+						{
+							$urlLink 	= base_url().'recordings/'.$dataArr[$i]['recording'];
+							$dataArr[$i]['recording'] = "<img  class='music_btn' src='".base_url()."images/play.png' data-src='".$urlLink."' />";
+							//<a href="http://144.76.168.74/shoutburst/jwplay.php?rec_id='.$dataArr[$i]['recording'].'" target="_blank">Play</a>';
+						}
+						else
+						{
+							$dataArr[$i]['recording'] = '';
+						}
+					}
+					else
+					{
+						$dataArr[$i]['recording'] = '';
 					}
 				}
 
@@ -206,9 +214,8 @@
 				if(empty($dataArr))
 				{
 					$data['errMessage']		 =	'<div id="message" class="error">No Record Found</div>';
-				}			
+				}
 
-				
 				if( $requestedFromList == 'Request From List' )
 				{
 
