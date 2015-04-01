@@ -202,7 +202,7 @@ if (defined('ENVIRONMENT'))
 	// Path to the front controller (this file)
 	define('FCPATH', str_replace(SELF, '', __FILE__));
 
-	define('RECORDPATH', BASEPATH . 'recordings/');
+	define('RECORDPATH', FCPATH . 'recordings/');
 
 	// Name of the "system folder"
 	define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
