@@ -10,7 +10,6 @@
 			<?php
 			if (isset($dashboard))
 			{
-				_ran_printr($dashboard);
 				for ($d = 1; $d <= 4; $d++ )
 				{
 				?>
