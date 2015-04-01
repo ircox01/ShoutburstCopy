@@ -10,15 +10,14 @@
 			<?php
 			if (isset($dashboard))
 			{
-				//_ran_printr($dashboard);
-
-                                for ($d = 1; $d <= 4; $d++ )
-                                {
-                                ?>
-                                        <?php
-									if (isset($dashboard['qdr_'.$d])){
-										?>
-                                        <li id="<?php echo $dashboard['qdr_'.$d]; ?>" report_id="<?php echo $report_id[$d]?>" class="col-md-6">
+				_ran_printr($dashboard);
+				for ($d = 1; $d <= 4; $d++ )
+				{
+				?>
+						<?php
+					if (isset($dashboard['qdr_'.$d])){
+						?>
+						<li id="<?php echo $dashboard['qdr_'.$d]; ?>" report_id="<?php echo $report_id[$d]?>" class="col-md-6">
 <?php
 
 $target_url =  base_url().'reports/view_report/'.$report_id[$d].'/d';
