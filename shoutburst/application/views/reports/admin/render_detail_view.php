@@ -1,4 +1,5 @@
 <?php
+
 //get commong button which will display on reporting
 $commonButtons		= '';//commonButtons();
 
@@ -270,11 +271,14 @@ echo $html;
 
 
 
-	$(function(){
+	$(function()
+	{
 	var audio = document.getElementById('audio');
-	    $(".music_btn").on("click",function(){
+	    $(".music_btn").on("click",function()
+		{
 	        var data=$(this).attr("data-src");
-	        if(audio.paused){
+	        if(audio.paused)
+			{
 	        	//audio.currentTime = 0;
 	        	$("#audio > source").attr("src",data);
 	        	audio.load();

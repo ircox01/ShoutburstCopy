@@ -216,7 +216,7 @@ class Reports extends CI_Controller
 		$totalSurvey	=	false;
 		$select = '';
 		$comma = "";
-		
+
 		# create report column array
 		if(!empty($post['reports_fields']))
 		{
@@ -384,7 +384,6 @@ class Reports extends CI_Controller
 		{
 			$select .=" , cc.logo AS logo ";
 		}
-		
 
 		if ($report_type == 'word cloud') {
 			$select = "transcriptions_text".$select;
@@ -438,14 +437,21 @@ class Reports extends CI_Controller
 
 		$query = 'SELECT '. $select .' '. $from .' '. $join .' '. $where;
 
-		if (@$maximumScores or @$incompletes)
+		if (isset($maximumScores) || isset($incompletes))
 		{
-			$query = str_replace('{{maximum_scores}}',"(select count(*) from surveys s $join $where and (s.max_q1 + s.max_q2 + s.max_q3 + s.max_q4 + s.max_q5 = s.total_score))", $query);
-			$query = str_replace('{{incompletes}}',"(select count(*) from surveys s $join $where and (IF(s.q1 = 0 or s.q1 = NULL,1,0) + IF(s.q1 = 0 or s.q1 = NULL,1,0) + IF(s.q2 = 0 or s.q2 = NULL,1,0) + IF(s.q3 = 0 or s.q3 = NULL,1,0) + IF(s.q4 = 0 or s.q4 = NULL,1,0) < 3 ))", $query);
+			if (isset($maximumScores) && $maximumScores)
+			{
+				$query = str_replace('{{maximum_scores}}',"(select count(*) from surveys s $join $where and (s.max_q1 + s.max_q2 + s.max_q3 + s.max_q4 + s.max_q5 = s.total_score))", $query);
+			}
+
+			if (isset($incompletes) && $incompletes)
+			{
+				$query = str_replace('{{incompletes}}',"(select count(*) from surveys s $join $where and (IF(s.q1 = 0 or s.q1 = NULL,1,0) + IF(s.q1 = 0 or s.q1 = NULL,1,0) + IF(s.q2 = 0 or s.q2 = NULL,1,0) + IF(s.q3 = 0 or s.q3 = NULL,1,0) + IF(s.q4 = 0 or s.q4 = NULL,1,0) < 3 ))", $query);
+			}
 			$query = $query." LIMIT 1";
 		}
 
-	  	//die(var_debug($query));
+		//die(var_debug($query));
 	    /*
 	    $query = "SELECT camp_name,q1,SUM(s.q1) AS totalSurveyScore,DATE_FORMAT(FROM_UNIXTIME(UNIX_TIMESTAMP(date_time) - MOD(UNIX_TIMESTAMP(date_time), 300)), '%Y-%m-%d %H:%i') AS reportDate,GROUP_CONCAT(CONCAT(s.q1,'---+++--', Date_format(DATE_SUB(date_time, INTERVAL 5 MINUTE),'%Y-%m-%d %H:%i')) SEPARATOR '___---___') AS totalWithRange,CONCAT('Record Shown for ', MONTHNAME(DATE_SUB(NOW(), INTERVAL 1 MONTH)),',',YEAR(s.date_time)) AS recordShownMessage,GROUP_CONCAT(DISTINCT(camp_name)) AS AgentFullName,full_name,s.q1 , cc.logo AS logo  FROM surveys s LEFT JOIN users u ON u.user_id = s.user_id
 				 LEFT JOIN user_companies uc ON uc.user_id = u.user_id
@@ -501,7 +507,7 @@ class Reports extends CI_Controller
 		}
 
 		//check data type is chart or not
-		if(in_array($report_type,$chartType)){
+		if(in_array($report_type, $chartType)){
 			//draw chart
 			
 			$x_axis_label		=	$post['x_axis_label'];
@@ -565,6 +571,7 @@ class Reports extends CI_Controller
 						
 			//$query = 'SELECT '. $select .' '. $from .' '. $join .' '. $where;
 	 		$selectedColoumnHeading = "Date / Time,".$selectedColoumnHeading;
+
 			detailReportDraw( $query, $report_type , $background_color , $report_period, $start_date, $end_date, $report_name , $selectedColoumnHeading );
 		}
 	}
@@ -1874,7 +1881,7 @@ public function wcDraw($query) {
 				//data report not shown to agent
 				if (isset($this->session->userdata['access'])&&$this->session->userdata['access'] != COMP_AGENT){
 					
-					$report	=	$this->reports->get_report($report_id);
+					$report	= $this->reports->get_report($report_id);
 					$data['report'] = $report;
 					$this->load->template('reports/view_detail_report', $data);
 				} else {

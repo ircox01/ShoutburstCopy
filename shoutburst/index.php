@@ -20,6 +20,12 @@ function _ran_rinnk($arr, $key, $default = null)
 	return isset($arr[$key]) ? $arr[$key] : $default;
 }
 
+// return if not null field
+function _ran_rinnf($obj, $field, $default = null)
+{
+	return isset($obj->{$field}) ? $obj->{$field} : $default;
+}
+
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT

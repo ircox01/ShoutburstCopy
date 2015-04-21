@@ -1,9 +1,34 @@
 <?php
 
+/**
+ * Class LoaderExt
+ */
 class LoaderExt extends CI_Loader
 {
     const LIBRARY   = 1;
     const MODEL     = 2;
+
+    public function template($name, $vars = array(), $return = FALSE)
+    {
+        $content = false;
+
+        $header = _ran_rinnk($vars, '_tmp_header', 'templates/retail_header');
+        $footer = _ran_rinnk($vars, '_tmp_footer', 'templates/retail_footer');
+
+        if ($return)
+        {
+            $content  = $this->view($header, $vars, 1);
+            $content .= $this->view($name, $vars, 1);
+            $content .= $this->view($footer, $vars, 1);
+        }
+        else
+        {
+            $this->view($header, $vars);
+            $this->view($name, $vars);
+            $this->view($footer, $vars);
+        }
+        return $content;
+    }
 
     public function singlton($type, $options = array())
     {

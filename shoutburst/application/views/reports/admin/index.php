@@ -35,15 +35,15 @@ Report</a> <a href="#" class="main-nav-toggle"></a><?php echo heading('&nbsp;&nb
 	//_ran_printr($reports);
 	//$sql_q = str_replace('AND MONTHNAME(s.date_time) = MONTHNAME(DATE_SUB(NOW(), INTERVAL 1 MONTH))', '', $reports[0]->report_query);
 	//$reports[5]->report_query = _ran_trimReportQueryDate($reports[5]->report_query);
-	//_ran_printr($reports[0]);
+	//_ran_printr($reports[7]);
 	//_ran_printr($this->db->query($reports[0]->report_query)->result());
 
-	foreach ($reports as $key){
-
+	foreach ($reports as $key)
+	{
 		$db_res = $this->db->query($key->report_query)->result();
 		$show_details = (count($db_res) !== 0);
 
-		if ($show_details && isset($db_res[0]->recording)) $show_details = ($db_res[0]->recording !== 'Not Found');
+		//if ($show_details && isset($db_res[0]->recording)) $show_details = ($db_res[0]->recording !== 'Not Found');
 
 		?>
 
