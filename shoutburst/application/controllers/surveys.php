@@ -1,5 +1,6 @@
 <?php
 
+header('Access-Control-Allow-Origin: http://shoutburst');
 /**
  * Class r_RESTfullApi
  * @property CI_Loader $load
@@ -126,25 +127,23 @@ function testDataAjaxGET()
                 where: [
                     {
                         fields  : {
-                            sur_id  : 9614
+                            sur_id  : 12564
                         },
                         operator: '>=',
                         type    : 'and'
                     },
                     {
                         fields  : {
-                            q1      : 5,
-                            q2      : 5
-
+                            sur_id  : 12561
                         },
-                        operator: '>',
+                        operator: '=',
                         type    : 'or'
                     }
                 ]
             };
 
             $.ajax({
-                url: 'http://shoutburst/surveys/index',
+                url: 'http://app.shoutburst.co.uk/surveys/index',
                 method: 'GET',
                 dataType: 'json',
                 data: data,
